@@ -261,28 +261,136 @@ export default function Home() {
           <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
             <h2 className="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">Projects</h2>
             <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-              My project showcase is coming soon!
+              Here are some of my featured projects showcasing different technologies and solutions.
             </p>
-            <div className="w-full max-w-md mx-auto mt-8">
-              <Card className="border-dashed overflow-hidden relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-primary/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <CardContent className="pt-6 flex flex-col items-center justify-center min-h-[200px] text-center">
+          </div>
+          
+          <div className="mx-auto grid max-w-[58rem] grid-cols-1 gap-6 md:grid-cols-2">
+            {/* CleanTrack Project */}
+            <Card className="group overflow-hidden border border-border/40 transition-all hover:shadow-lg">
+              <div className="bg-gradient-to-r from-green-500/10 via-emerald-500/5 to-green-600/10 p-4 border-b border-border/30 group-hover:from-green-500/20 group-hover:via-emerald-500/10 group-hover:to-green-600/20 transition-colors">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold">CleanTrack</h3>
                   <Link
-                    href="https://github.com/andrei-iacobb"
+                    href="https://github.com/andrei-iacobb/cleantrack"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full bg-muted p-3 mb-4 inline-block hover:bg-muted/80 transition-colors relative group"
+                    className="p-2 rounded-full hover:bg-background/80 transition-colors"
                   >
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full opacity-0 group-hover:opacity-75 blur transition duration-500"></div>
-                    <Github className="h-6 w-6 text-muted-foreground relative z-10" />
+                    <Github className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
                   </Link>
-                  <h3 className="text-xl font-medium mb-2">Stay Tuned</h3>
-                  <p className="text-muted-foreground">
-                    I'm currently working on some exciting projects that will be showcased here soon.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+              </div>
+              <CardContent className="p-6">
+                <p className="text-muted-foreground mb-4">
+                  A tracking and management system for cleaning operations with modern web technologies.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <div className="bg-green-500/10 text-green-600 px-2 py-1 rounded-md text-sm font-medium">
+                    Web App
+                  </div>
+                  <div className="bg-muted/50 px-2 py-1 rounded-md text-sm font-medium">
+                    Management
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* StaffClock Project */}
+            <Card className="group overflow-hidden border border-border/40 transition-all hover:shadow-lg">
+              <div className="bg-gradient-to-r from-blue-500/10 via-indigo-500/5 to-blue-600/10 p-4 border-b border-border/30 group-hover:from-blue-500/20 group-hover:via-indigo-500/10 group-hover:to-blue-600/20 transition-colors">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold">StaffClock</h3>
+                  <Link
+                    href="https://github.com/andrei-iacobb/staffclock"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full hover:bg-background/80 transition-colors"
+                  >
+                    <Github className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+                  </Link>
+                </div>
+              </div>
+              <CardContent className="p-6">
+                <p className="text-muted-foreground mb-4">
+                  Time tracking and staff management application for monitoring employee hours and productivity.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <div className="bg-blue-500/10 text-blue-600 px-2 py-1 rounded-md text-sm font-medium">
+                    Time Tracking
+                  </div>
+                  <div className="bg-muted/50 px-2 py-1 rounded-md text-sm font-medium">
+                    HR Management
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Informate Project */}
+            <Card className="group overflow-hidden border border-border/40 transition-all hover:shadow-lg">
+              <div className="bg-gradient-to-r from-purple-500/10 via-violet-500/5 to-purple-600/10 p-4 border-b border-border/30 group-hover:from-purple-500/20 group-hover:via-violet-500/10 group-hover:to-purple-600/20 transition-colors">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold">Informate</h3>
+                  <Link
+                    href="https://github.com/andrei-iacobb/informate"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full hover:bg-background/80 transition-colors"
+                  >
+                    <Github className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+                  </Link>
+                </div>
+              </div>
+                             <CardContent className="p-6">
+                 <p className="text-muted-foreground mb-4">
+                   AI-powered news summarizer built for university using Java, OpenAI API, and natural language processing.
+                 </p>
+                 <div className="flex flex-wrap gap-2">
+                   <div className="bg-purple-500/10 text-purple-600 px-2 py-1 rounded-md text-sm font-medium">
+                     AI/NLP
+                   </div>
+                   <div className="bg-muted/50 px-2 py-1 rounded-md text-sm font-medium">
+                     Java
+                   </div>
+                   <div className="bg-muted/50 px-2 py-1 rounded-md text-sm font-medium">
+                     OpenAI API
+                   </div>
+                 </div>
+               </CardContent>
+            </Card>
+
+            {/* Car Sales Project */}
+            <Card className="group overflow-hidden border border-border/40 transition-all hover:shadow-lg">
+              <div className="bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-orange-600/10 p-4 border-b border-border/30 group-hover:from-orange-500/20 group-hover:via-amber-500/10 group-hover:to-orange-600/20 transition-colors">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold">Car Sales Finalised</h3>
+                  <Link
+                    href="https://github.com/andrei-iacobb/car_sales_finalised"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full hover:bg-background/80 transition-colors"
+                  >
+                    <Github className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+                  </Link>
+                </div>
+              </div>
+                             <CardContent className="p-6">
+                 <p className="text-muted-foreground mb-4">
+                   Simple car sales and inventory tracking system built in C programming language for teaching university students.
+                 </p>
+                 <div className="flex flex-wrap gap-2">
+                   <div className="bg-orange-500/10 text-orange-600 px-2 py-1 rounded-md text-sm font-medium">
+                     C Programming
+                   </div>
+                   <div className="bg-muted/50 px-2 py-1 rounded-md text-sm font-medium">
+                     Educational
+                   </div>
+                   <div className="bg-muted/50 px-2 py-1 rounded-md text-sm font-medium">
+                     Inventory System
+                   </div>
+                 </div>
+               </CardContent>
+            </Card>
           </div>
         </section>
 
