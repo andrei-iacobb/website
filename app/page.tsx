@@ -1,121 +1,15 @@
-"use client"
-
-import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Github, Linkedin, Mail, Code, Sparkles } from "lucide-react"
+import { Github, Linkedin, Mail, Code } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { InteractiveHeader } from "@/components/interactive-header"
 
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // For the compact header transition
-      const isScrolled = window.scrollY > 50
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled)
-      }
-
-      // For the progress indicator
-      const windowHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrollPosition = window.scrollY / windowHeight
-      setScrollProgress(scrollPosition)
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [scrolled])
-
   return (
     <div className="min-h-screen bg-background">
-      <header
-        className={`sticky top-0 z-40 w-full transition-all duration-500 ease-in-out ${scrolled ? "py-2" : "py-4"}`}
-      >
-        {/* Progress bar */}
-        <div
-          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-purple-500 via-primary to-blue-500"
-          style={{ width: `${scrollProgress * 100}%` }}
-        />
-
-        {/* Background with blur and gradient */}
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-md z-[-1]">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-primary/5 to-blue-500/10" />
-        </div>
-
-        <div className="container flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div
-              className={`relative overflow-hidden transition-all duration-500 ease-in-out ${
-                scrolled ? "h-9 w-9 rounded-full border-2 border-primary" : "h-0 w-0 opacity-0"
-              }`}
-            >
-              {scrolled && (
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pfp.jpg-jnNV3ygNy4DZBVIYQJ7zaedW8CWhYE.jpeg"
-                  alt="Profile"
-                  width={36}
-                  height={36}
-                  className="object-cover"
-                />
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <span className={`font-bold transition-all duration-500 ${scrolled ? "text-base" : "text-xl"}`}>
-                {scrolled ? "Andrei" : "Welcome"}
-              </span>
-              {!scrolled && (
-                <div className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-1 rounded-full text-primary text-sm font-medium">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  <span>Portfolio</span>
-                </div>
-              )}
-              {scrolled && <span className="text-xs text-muted-foreground animate-fade-in">Developer</span>}
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            {scrolled && (
-              <div className="hidden sm:flex items-center gap-1 px-3 py-1.5 bg-muted/50 rounded-full">
-                <Link
-                  href="https://github.com/andrei-iacobb"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 rounded-full hover:bg-background/80 transition-colors"
-                >
-                  <Github className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
-                </Link>
-                <Link
-                  href="https://linkedin.com/in/andreigiacob"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 rounded-full hover:bg-background/80 transition-colors"
-                >
-                  <Linkedin className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
-                </Link>
-                <Link
-                  href="mailto:andreiiacob2006@gmail.com"
-                  className="p-1.5 rounded-full hover:bg-background/80 transition-colors"
-                >
-                  <Mail className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
-                </Link>
-              </div>
-            )}
-            <div className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full opacity-75 blur group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-              <ThemeToggle />
-            </div>
-          </div>
-        </div>
-
-        {/* Decorative elements */}
-        <div className="absolute -bottom-3 left-1/4 h-6 w-6 rounded-full bg-primary/10 blur-xl" />
-        <div className="absolute -bottom-2 right-1/3 h-4 w-4 rounded-full bg-purple-500/20 blur-lg" />
-        <div className="absolute -bottom-4 right-1/4 h-8 w-8 rounded-full bg-blue-500/10 blur-xl" />
-      </header>
+      <InteractiveHeader />
       <main className="container py-8 md:py-12">
         <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-16">
           <div className="flex flex-col-reverse gap-8 md:flex-row md:items-center">
@@ -158,16 +52,25 @@ export default function Home() {
               </div>
             </div>
             <div className="md:w-1/3 flex justify-center">
-              <div className="relative group">
+              <div className="relative group cursor-pointer">
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full opacity-70 blur group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                <div className="relative h-60 w-60 overflow-hidden rounded-full border-4 border-background">
+                <div className="relative h-60 w-60 overflow-hidden rounded-full border-4 border-background transition-transform duration-500 ease-in-out group-hover:scale-105">
+                  {/* Photo 1 */}
                   <Image
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pfp.jpg-jnNV3ygNy4DZBVIYQJ7zaedW8CWhYE.jpeg"
-                    alt="Profile photo at night with palm trees"
+                    alt="Profile Photo 1"
                     width={240}
                     height={240}
-                    className="object-cover"
+                    className="object-cover transition-all duration-700 ease-in-out group-hover:opacity-0 group-hover:scale-110"
                     priority
+                  />
+                  {/* Photo 2 - Replace this src with your second photo URL when ready */}
+                  <Image
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pfp.jpg-jnNV3ygNy4DZBVIYQJ7zaedW8CWhYE.jpeg"
+                    alt="Profile Photo 2"
+                    width={240}
+                    height={240}
+                    className="object-cover absolute inset-0 opacity-0 scale-95 transition-all duration-700 ease-in-out group-hover:opacity-100 group-hover:scale-110"
                   />
                 </div>
               </div>
@@ -198,50 +101,50 @@ export default function Home() {
                   <CardContent className="p-4">
                     <div className="flex flex-wrap gap-2">
                       {["Python", "C", "C#", "JavaScript", "TypeScript", "HTML", "CSS", "SQL"].map((skill) => (
-                        <div
+                        <span
                           key={skill}
-                          className="bg-muted/50 px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/10 transition-colors"
+                          className="inline-flex items-center rounded-md bg-muted px-2 py-1 text-xs font-medium text-muted-foreground ring-1 ring-inset ring-muted"
                         >
                           {skill}
-                        </div>
+                        </span>
                       ))}
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Frameworks & Libraries */}
+                {/* Frameworks */}
                 <Card className="overflow-hidden border border-border/40 transition-all hover:shadow-md group">
                   <div className="bg-gradient-to-r from-purple-500/10 via-primary/5 to-blue-500/10 p-4 border-b border-border/30 group-hover:from-purple-500/20 group-hover:via-primary/10 group-hover:to-blue-500/20 transition-colors">
-                    <h3 className="font-medium">Frameworks & Libraries</h3>
+                    <h3 className="font-medium">Frameworks</h3>
                   </div>
                   <CardContent className="p-4">
                     <div className="flex flex-wrap gap-2">
-                      {["React", "Next.js", "Node.js", "React Native"].map((skill) => (
-                        <div
+                      {["React", "Next.js", "Node.js", "Express", "Flask", ".NET", "Tailwind CSS"].map((skill) => (
+                        <span
                           key={skill}
-                          className="bg-muted/50 px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/10 transition-colors"
+                          className="inline-flex items-center rounded-md bg-muted px-2 py-1 text-xs font-medium text-muted-foreground ring-1 ring-inset ring-muted"
                         >
                           {skill}
-                        </div>
+                        </span>
                       ))}
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Tools & Technologies */}
+                {/* Tools */}
                 <Card className="overflow-hidden border border-border/40 transition-all hover:shadow-md group">
                   <div className="bg-gradient-to-r from-purple-500/10 via-primary/5 to-blue-500/10 p-4 border-b border-border/30 group-hover:from-purple-500/20 group-hover:via-primary/10 group-hover:to-blue-500/20 transition-colors">
-                    <h3 className="font-medium">Tools & Technologies</h3>
+                    <h3 className="font-medium">Tools</h3>
                   </div>
                   <CardContent className="p-4">
                     <div className="flex flex-wrap gap-2">
-                      {["Git", "GitHub", "Linux", "Docker", "PostgreSQL", "VS Code", "Bash"].map((skill) => (
-                        <div
+                      {["Git", "Docker", "PostgreSQL", "MongoDB", "AWS", "Linux", "VS Code"].map((skill) => (
+                        <span
                           key={skill}
-                          className="bg-muted/50 px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/10 transition-colors"
+                          className="inline-flex items-center rounded-md bg-muted px-2 py-1 text-xs font-medium text-muted-foreground ring-1 ring-inset ring-muted"
                         >
                           {skill}
-                        </div>
+                        </span>
                       ))}
                     </div>
                   </CardContent>
