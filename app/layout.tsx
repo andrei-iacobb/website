@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://andrei.iacob.dev',
+    url: 'https://andrei.iacob.uk',
     title: 'Andrei Iacob - Portfolio',
     description: 'Computer Science student passionate about building innovative solutions. Explore my projects, skills, and experience.',
     siteName: 'Andrei Iacob Portfolio',

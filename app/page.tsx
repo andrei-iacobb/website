@@ -85,7 +85,7 @@ export default function Home() {
               <p className="mt-4 max-w-[85%] mx-auto leading-normal text-muted-foreground sm:text-lg sm:leading-7">
                 I'm a Computer Science student passionate about building innovative solutions. I enjoy working with
                 modern technologies and am constantly learning new skills. My interests include web development,
-                artificial intelligence, and open source contributions.
+                artificial intelligence, and open source contributions. I also specialise in providing IT solutions and support for various companies and individuals
               </p>
             </div>
 
@@ -325,7 +325,7 @@ export default function Home() {
       </main>
       <footer className="border-t py-6 md:py-0">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-          <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Andrei. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Andrei Gabriel Iacob. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="https://github.com/andrei-iacobb" target="_blank" rel="noopener noreferrer">
               <Github className="h-5 w-5 text-muted-foreground hover:text-primary" />
