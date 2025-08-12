@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://andrei.iacob.dev/sitemap.xml
+Sitemap: https://andrei.iacob.uk/sitemap.xml
 
 # Block common bot patterns
 User-agent: AhrefsBot

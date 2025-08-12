@@ -57,16 +57,16 @@ export default function Home() {
                 <div className="relative h-60 w-60 overflow-hidden rounded-full border-4 border-background transition-transform duration-500 ease-in-out group-hover:scale-105">
                   {/* Photo 1 */}
                   <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pfp.jpg-jnNV3ygNy4DZBVIYQJ7zaedW8CWhYE.jpeg"
+                    src="/D5CFE413-5175-409A-819C-C6615A60E76D.jpeg"
                     alt="Profile Photo 1"
                     width={240}
                     height={240}
-                    className="object-cover transition-all duration-700 ease-in-out group-hover:opacity-0 group-hover:scale-110"
+                    className="object-cover object-[center_-27px] transition-all duration-700 ease-in-out group-hover:opacity-0 group-hover:scale-110"
                     priority
                   />
                   {/* Photo 2 - Replace this src with your second photo URL when ready */}
                   <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pfp.jpg-jnNV3ygNy4DZBVIYQJ7zaedW8CWhYE.jpeg"
+                    src="/1000003113.JPG"
                     alt="Profile Photo 2"
                     width={240}
                     height={240}
