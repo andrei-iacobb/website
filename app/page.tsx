@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { InteractiveHeader } from "@/components/interactive-header"
 
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">

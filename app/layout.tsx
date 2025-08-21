@@ -3,6 +3,7 @@ import "@/app/globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import type { Metadata } from "next"
+import Script from "next/script"
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -61,24 +62,30 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        <Script
+          strategy="afterInteractive"
+          data-domain="andrei.iacob.uk"
+          src="https://plausible.iacob.uk/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js"
+        />
+
+        <Script id="plausible-init" strategy="afterInteractive">
+          {`
+            window.plausible = window.plausible || function () {
+              (window.plausible.q = window.plausible.q || []).push(arguments);
+            };
+          `}
+        </Script>
       </head>
+
       <body className={`${inter.className} ${inter.variable} antialiased`}>
-        <ThemeProvider 
-          attribute="class" 
-          defaultTheme="dark" 
-          enableSystem={false} 
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           {children}
         </ThemeProvider>
       </body>
