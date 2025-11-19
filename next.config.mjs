@@ -38,7 +38,12 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
     optimizeServerReact: true,
+    optimizeCss: true,
   },
+  // Power optimizations
+  poweredByHeader: false,
+  // Optimize loading behavior
+  reactStrictMode: true,
   // Add security headers
   async headers() {
     return [

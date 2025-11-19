@@ -5,10 +5,12 @@ import { ThemeProvider } from "@/components/theme-provider"
 import type { Metadata } from "next"
 import Script from "next/script"
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   display: 'swap',
-  variable: '--font-inter'
+  variable: '--font-inter',
+  preload: true,
+  fallback: ['system-ui', 'arial']
 })
 
 export const metadata: Metadata = {
@@ -21,6 +23,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Andrei Iacob" }],
   creator: "Andrei Iacob",
   publisher: "Andrei Iacob",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
   robots: {
     index: true,
     follow: true,

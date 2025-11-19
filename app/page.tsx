@@ -15,18 +15,18 @@ export default function Home() {
         <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-16">
           <div className="flex flex-col-reverse gap-8 md:flex-row md:items-center">
             <div className="space-y-4 md:w-2/3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-muted/50 rounded-full text-sm text-muted-foreground mb-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-muted/50 rounded-full text-sm text-muted-foreground mb-2 initial-hidden animate-slide-in-down will-animate">
                 <Code className="h-4 w-4" />
                 <span>Computer Science Student</span>
               </div>
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl initial-hidden animate-slide-in-left delay-100 will-animate">
                 Hi, I'm{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-primary to-blue-500">
                   Andrei
                 </span>
               </h1>
-              <p className="max-w-[700px] text-muted-foreground md:text-xl">Developer & Tech Enthusiast</p>
-              <div className="flex gap-4">
+              <p className="max-w-[700px] text-muted-foreground md:text-xl initial-hidden animate-slide-in-left delay-200 will-animate">Developer & Tech Enthusiast</p>
+              <div className="flex gap-4 initial-hidden animate-slide-in-up delay-300 will-animate">
                 <Button asChild className="relative group">
                   <a href="#contact">
                     <span className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-md opacity-30 blur group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></span>
@@ -37,7 +37,7 @@ export default function Home() {
                   <a href="#projects">View Projects</a>
                 </Button>
               </div>
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-4 pt-4 initial-hidden animate-fade-in-scale delay-400 will-animate">
                 <Link href="https://github.com/andrei-iacobb" target="_blank" rel="noopener noreferrer">
                   <Github className="h-6 w-6 text-muted-foreground hover:text-primary" />
                   <span className="sr-only">GitHub</span>
@@ -52,7 +52,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div className="md:w-1/3 flex justify-center">
+            <div className="md:w-1/3 flex justify-center initial-hidden animate-slide-in-right delay-200 will-animate">
               <div className="relative group cursor-pointer">
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full opacity-70 blur group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                 <div className="relative h-60 w-60 overflow-hidden rounded-full border-4 border-background transition-transform duration-500 ease-in-out group-hover:scale-105">
