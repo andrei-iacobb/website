@@ -60,6 +60,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "critters": "^0.0.24",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",

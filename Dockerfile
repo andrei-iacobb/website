@@ -6,14 +6,11 @@ RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
-# Install pnpm for faster package management
-RUN npm install -g pnpm
-
 # Copy package files
-COPY package.json pnpm-lock.yaml* ./
+COPY package.json package-lock.json* ./
 
-# Install dependencies with frozen lockfile for reproducible builds
-RUN pnpm install --frozen-lockfile --production=false
+# Install dependencies with ci for reproducible builds (legacy-peer-deps for date-fns/react-day-picker conflict)
+RUN npm ci --legacy-peer-deps
 
 # ================================
 # STAGE 2: Builder
@@ -21,11 +18,10 @@ RUN pnpm install --frozen-lockfile --production=false
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
-
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/package.json ./package.json
+COPY --from=deps /app/package-lock.json ./package-lock.json
 
 # Copy source code
 COPY . .
@@ -35,7 +31,7 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Build the application with optimizations
-RUN pnpm build
+RUN npm run build
 
 # ================================
 # STAGE 3: Runner (Production)
