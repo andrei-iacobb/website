@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://andrei.iacob.uk',
+    url: 'https://andrei.iacob.co.uk',
     title: 'Andrei Iacob - Portfolio',
     description: 'Computer Science student passionate about building innovative solutions. Explore my projects, skills, and experience.',
     siteName: 'Andrei Iacob Portfolio',
@@ -77,16 +77,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         <Script
-          strategy="afterInteractive"
-          data-domain="andrei.iacob.uk"
-          src="https://plausible.iacob.uk/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js"
+          async
+          src="https://plausible.iacob.co.uk/js/pa-m1xwZ1hSkHyno5MdVsJ0G.js"
         />
 
         <Script id="plausible-init" strategy="afterInteractive">
           {`
-            window.plausible = window.plausible || function () {
-              (window.plausible.q = window.plausible.q || []).push(arguments);
+            window.plausible = window.plausible || function() {
+              (plausible.q = plausible.q || []).push(arguments)
             };
+            plausible.init = plausible.init || function(i) {
+              plausible.o = i || {}
+            };
+            plausible.init();
           `}
         </Script>
       </head>
