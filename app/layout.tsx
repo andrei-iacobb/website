@@ -2,17 +2,18 @@ import type React from "react"
 import "@/app/globals.css"
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { LanguageProvider } from "@/lib/language-context"
 import type { Metadata } from "next"
 import Script from "next/script"
 
 const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-bricolage",
 })
 
 const dmSans = DM_Sans({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-dm-sans",
 })
@@ -91,7 +92,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       <body className={`${bricolage.variable} ${dmSans.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          {children}
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

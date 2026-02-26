@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function InteractiveHeader() {
   return (
@@ -12,7 +13,10 @@ export function InteractiveHeader() {
       >
         Andrei Gabriel Iacob
       </Link>
-      <ThemeToggle />
+      <div className="flex items-center gap-1">
+        <LanguageSwitcher />
+        <ThemeToggle />
+      </div>
     </div>
   )
 }

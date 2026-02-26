@@ -1,49 +1,46 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { Github, Linkedin, Mail, ArrowUpRight, Lock } from "lucide-react"
 import { InteractiveHeader } from "@/components/interactive-header"
+import { useLanguage } from "@/lib/language-context"
 
 const projects = [
   {
     name: "NeatPlan",
-    description:
-      "Cleaning management system with real-time tracking, admin dashboard, analytics, scheduling, and mobile support.",
+    descKey: "project.neatplan.desc",
     tags: ["Next.js", "Prisma", "PostgreSQL", "TypeScript"],
     url: "https://github.com/andrei-iacobb/neatplan",
   },
   {
     name: "HomeOps",
-    description:
-      "GitOps-managed homelab running Kubernetes on enterprise HP ProLiant servers with Flux CD, Talos Linux, and 30+ self-hosted services.",
+    descKey: "project.homeops.desc",
     tags: ["Kubernetes", "Flux CD", "Talos", "Proxmox"],
     url: "https://github.com/andrei-iacobb/homeops",
   },
   {
     name: "Visitor Management",
-    description:
-      "Multi-site visitor check-in platform with Android kiosks, contractor validation, vehicle tracking, and Telegram notifications.",
+    descKey: "project.visitor.desc",
     tags: ["React", "Express", "Kotlin", "PostgreSQL"],
     url: "#",
     private: true,
   },
   {
     name: "StaffClock",
-    description:
-      "Time tracking and staff management application for monitoring employee hours and productivity.",
+    descKey: "project.staffclock.desc",
     tags: ["Python", "PyQt6", "OpenCV"],
     url: "https://github.com/andrei-iacobb/staffclock",
   },
   {
     name: "Informate",
-    description:
-      "AI-powered news summarizer built with Java, OpenAI API, and natural language processing.",
+    descKey: "project.informate.desc",
     tags: ["Java", "OpenAI", "NLP"],
     url: "https://github.com/andrei-iacobb/informate",
   },
   {
     name: "Car Sales Finalised",
-    description:
-      "Car sales and inventory tracking system built in C for educational purposes.",
+    descKey: "project.carsales.desc",
     tags: ["C", "Educational"],
     url: "https://github.com/andrei-iacobb/car_sales_finalised",
   },
@@ -62,6 +59,8 @@ const technologies = [
 ]
 
 export default function Home() {
+  const { t } = useLanguage()
+
   return (
     <div className="min-h-screen bg-background">
       <InteractiveHeader />
@@ -74,22 +73,21 @@ export default function Home() {
           <div className="container relative">
             <div className="flex flex-col items-center text-center space-y-6">
               <p className="text-sm font-semibold text-primary tracking-widest uppercase animate-fade-up">
-                Computer Science Student
+                {t("hero.subtitle")}
               </p>
               <h1
                 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight leading-[1.08] animate-fade-up"
                 style={{ animationDelay: "100ms" }}
               >
-                I build things
+                {t("hero.title.line1")}
                 <br />
-                for the web.
+                {t("hero.title.line2")}
               </h1>
               <p
                 className="text-xl md:text-2xl text-muted-foreground max-w-xl leading-relaxed animate-fade-up"
                 style={{ animationDelay: "200ms" }}
               >
-                Building practical software with modern web technologies.
-                Focused on clean code and real-world solutions.
+                {t("hero.description")}
               </p>
               <div
                 className="flex items-center gap-5 pt-4 animate-fade-up"
@@ -131,22 +129,11 @@ export default function Home() {
             <div className="flex flex-col md:flex-row md:items-start md:gap-16 lg:gap-24">
               <div className="flex-1">
                 <h2 className="font-display text-3xl md:text-4xl font-bold mb-8">
-                  About
+                  {t("about.heading")}
                 </h2>
                 <div className="space-y-5 text-muted-foreground text-lg leading-relaxed">
-                  <p>
-                    I&apos;m a Computer Science student passionate about building
-                    innovative solutions. I enjoy working with modern technologies
-                    and am constantly learning new skills. My interests span web
-                    development, artificial intelligence, and open source
-                    contributions.
-                  </p>
-                  <p>
-                    I also specialise in providing IT solutions and support for
-                    various companies and individuals. Currently expanding my skills
-                    in React, TypeScript, and cloud infrastructure,always
-                    looking for opportunities to apply them in real-world projects.
-                  </p>
+                  <p>{t("about.p1")}</p>
+                  <p>{t("about.p2")}</p>
                 </div>
               </div>
 
@@ -165,7 +152,7 @@ export default function Home() {
 
             <div className="mt-16">
               <h3 className="text-sm font-semibold text-primary tracking-widest uppercase mb-10">
-                Technologies
+                {t("about.tech.heading")}
               </h3>
               <div className="flex flex-col md:flex-row md:items-start md:gap-14 lg:gap-20">
                 <div className="md:flex-shrink-0 mb-8 md:mb-0 space-y-4">
@@ -192,15 +179,10 @@ export default function Home() {
                 </div>
                 <div className="flex-1 space-y-5">
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    I work across the full stack,from React and Next.js on the
-                    frontend to Node.js, Python, and .NET on the backend, with
-                    PostgreSQL and MongoDB for data.
+                    {t("about.tech.p1")}
                   </p>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    Outside of application development, I run a GitOps-managed homelab
-                    on enterprise HP ProLiant servers,a Kubernetes cluster
-                    orchestrated with Flux CD on Talos Linux, behind Cloudflare tunnels,
-                    hosting everything from media services to local LLMs.
+                    {t("about.tech.p2")}
                   </p>
                   <div className="flex flex-wrap gap-2 pt-2">
                     {technologies.map((tech) => (
@@ -222,10 +204,10 @@ export default function Home() {
         <section id="projects" className="py-24 md:py-32 scroll-mt-20">
           <div className="container">
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Projects
+              {t("projects.heading")}
             </h2>
             <p className="text-lg text-muted-foreground mb-12">
-              A selection of things I&apos;ve built.
+              {t("projects.subtitle")}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -243,7 +225,7 @@ export default function Home() {
                         <Lock className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
                       </div>
                       <p className="text-muted-foreground leading-relaxed mb-5">
-                        {project.description}
+                        {t(project.descKey)}
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag) => (
@@ -258,8 +240,8 @@ export default function Home() {
                     </div>
                     <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                       <Lock className="h-6 w-6 text-muted-foreground mb-3" />
-                      <p className="text-sm font-medium text-foreground">Private Repository</p>
-                      <p className="text-xs text-muted-foreground mt-1">As per company requirements</p>
+                      <p className="text-sm font-medium text-foreground">{t("projects.private.label")}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{t("projects.private.note")}</p>
                     </div>
                   </div>
                 ) : (
@@ -277,7 +259,7 @@ export default function Home() {
                       <ArrowUpRight className="h-5 w-5 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all duration-200 shrink-0 mt-0.5" />
                     </div>
                     <p className="text-muted-foreground leading-relaxed mb-5">
-                      {project.description}
+                      {t(project.descKey)}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
@@ -300,11 +282,10 @@ export default function Home() {
         <section id="contact" className="py-24 md:py-32 scroll-mt-20">
           <div className="container">
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-5">
-              Get in touch
+              {t("contact.heading")}
             </h2>
             <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
-              I&apos;m always open to new opportunities and interesting projects.
-              Feel free to reach out.
+              {t("contact.description")}
             </p>
             <div className="flex flex-col sm:flex-row gap-5 sm:gap-8">
               <Link
