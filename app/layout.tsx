@@ -50,20 +50,11 @@ export const metadata: Metadata = {
     title: 'Andrei Iacob - Portfolio',
     description: 'Computer Science student passionate about building innovative solutions. Explore my projects, skills, and experience.',
     siteName: 'Andrei Iacob Portfolio',
-    images: [
-      {
-        url: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pfp.jpg-jnNV3ygNy4DZBVIYQJ7zaedW8CWhYE.jpeg',
-        width: 1200,
-        height: 630,
-        alt: 'Andrei Iacob - Developer & Computer Science Student',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Andrei Iacob - Portfolio',
     description: 'Computer Science student passionate about building innovative solutions.',
-    images: ['https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pfp.jpg-jnNV3ygNy4DZBVIYQJ7zaedW8CWhYE.jpeg'],
   },
   icons: {
     icon: '/favicon.ico',
