@@ -3,7 +3,7 @@ import "@/app/globals.css"
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/language-context"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 
 const bricolage = Bricolage_Grotesque({
@@ -18,6 +18,12 @@ const dmSans = DM_Sans({
   variable: "--font-dm-sans",
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export const metadata: Metadata = {
   title: {
     default: "Andrei Iacob - Portfolio",
@@ -28,11 +34,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Andrei Iacob" }],
   creator: "Andrei Iacob",
   publisher: "Andrei Iacob",
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
   robots: {
     index: true,
     follow: true,

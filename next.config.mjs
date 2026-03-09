@@ -34,12 +34,9 @@ const nextConfig = {
   compress: true,
   // Optimize build performance
   experimental: {
-    webpackBuildWorker: true,
-    parallelServerBuildTraces: true,
-    parallelServerCompiles: true,
-    optimizeServerReact: true,
     optimizeCss: true,
   },
+  turbopack: {},
   // Power optimizations
   poweredByHeader: false,
   // Optimize loading behavior
@@ -78,17 +75,6 @@ const nextConfig = {
         ],
       },
     ]
-  },
-  // Optimize bundle analysis
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // Optimize client bundle
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-      }
-    }
-    return config
   },
 }
 
