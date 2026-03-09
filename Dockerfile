@@ -1,7 +1,7 @@
 # ================================
 # STAGE 1: Dependencies
 # ================================
-FROM node:18-alpine AS deps
+FROM node:22-alpine AS deps
 RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
@@ -15,7 +15,7 @@ RUN npm ci --legacy-peer-deps
 # ================================
 # STAGE 2: Builder
 # ================================
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Copy dependencies from deps stage
@@ -36,7 +36,7 @@ RUN npm run build
 # ================================
 # STAGE 3: Runner (Production)
 # ================================
-FROM node:18-alpine AS runner
+FROM node:22-alpine AS runner
 WORKDIR /app
 
 # Install dumb-init for proper signal handling
