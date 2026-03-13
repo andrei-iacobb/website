@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/constants'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://andrei.iacob.uk'
+  const baseUrl = SITE_URL
   const lastModified = new Date()
 
   return [

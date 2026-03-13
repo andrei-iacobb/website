@@ -17,21 +17,23 @@ type LanguageContextType = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("en")
+function getStoredLanguage(): Language {
+  if (typeof window === "undefined") return "en"
+  const saved = localStorage.getItem("lang")
+  return saved === "en" || saved === "ro" ? saved : "en"
+}
 
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguageState] = useState<Language>(getStoredLanguage)
+
+  // Sync the HTML lang attribute with the current language on mount
   useEffect(() => {
-    const saved = localStorage.getItem("lang") as Language | null
-    if (saved === "en" || saved === "ro") {
-      setLanguageState(saved)
-      document.documentElement.lang = saved
-    }
-  }, [])
+    document.documentElement.lang = language
+  }, [language])
 
   function setLanguage(lang: Language) {
     setLanguageState(lang)
     localStorage.setItem("lang", lang)
-    document.documentElement.lang = lang
   }
 
   function t(key: string) {

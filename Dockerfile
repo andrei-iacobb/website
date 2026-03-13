@@ -9,8 +9,8 @@ WORKDIR /app
 # Copy package files
 COPY package.json package-lock.json* ./
 
-# Install dependencies with ci for reproducible builds (legacy-peer-deps for date-fns/react-day-picker conflict)
-RUN npm ci --legacy-peer-deps
+# Install dependencies with ci for reproducible builds
+RUN npm ci
 
 # ================================
 # STAGE 2: Builder
@@ -70,8 +70,8 @@ USER nextjs
 EXPOSE 3000
 
 # Health check for container orchestration
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node server.js || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:3000/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]

@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/language-context"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
+import { SITE_URL } from "@/lib/constants"
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin", "latin-ext"],
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://andrei.iacob.co.uk',
+    url: SITE_URL,
     title: 'Andrei Iacob - Portfolio',
     description: 'Computer Science student passionate about building innovative solutions. Explore my projects, skills, and experience.',
     siteName: 'Andrei Iacob Portfolio',
@@ -58,12 +59,6 @@ export const metadata: Metadata = {
     title: 'Andrei Iacob - Portfolio',
     description: 'Computer Science student passionate about building innovative solutions.',
   },
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
-  },
-  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

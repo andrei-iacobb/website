@@ -35,7 +35,7 @@ services:
       - /tmp:noexec,nosuid,size=100m
 
   nginx:
-    image: nginx:1.25-alpine
+    image: nginx:1.27.4-alpine
     container_name: andrei-portfolio-nginx
     ports:
       - "80:80"
@@ -74,7 +74,7 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email andreiiacob2006@gmail.com -d yourdomain.com --agree-tos
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${CERTBOT_EMAIL} -d ${DOMAIN} --agree-tos
     depends_on:
       - nginx
     profiles:
