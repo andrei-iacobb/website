@@ -70,7 +70,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Script
           async
-          src="https://plausible.iacob.co.uk/js/pa-m1xwZ1hSkHyno5MdVsJ0G.js"
+          src="/js/p.js"
+          data-api="/api/p"
         />
 
         <Script id="plausible-init" strategy="afterInteractive">

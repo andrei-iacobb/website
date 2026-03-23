@@ -1,5 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/js/p.js',
+        destination: 'https://plausible.iacob.co.uk/js/pa-m1xwZ1hSkHyno5MdVsJ0G.js',
+      },
+      {
+        source: '/api/p',
+        destination: 'https://plausible.iacob.co.uk/api/event',
+      },
+    ]
+  },
   // Enable standalone output for Docker optimization
   output: 'standalone',
   // Enable image optimization for faster loading
@@ -46,7 +58,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.iacob.co.uk; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://plausible.iacob.co.uk",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'",
           },
           {
             key: 'Permissions-Policy',
