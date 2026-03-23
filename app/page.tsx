@@ -137,7 +137,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="mt-10 md:mt-0 md:flex-shrink-0">
+              <div className="mt-10 md:mt-0 md:flex-shrink-0 flex justify-center md:block">
                 <div className="relative w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl overflow-hidden ring-1 ring-border">
                   <Image
                     src="/IMG_3962.jpeg"
@@ -155,7 +155,7 @@ export default function Home() {
                 {t("about.tech.heading")}
               </h3>
               <div className="flex flex-col md:flex-row md:items-start md:gap-14 lg:gap-20">
-                <div className="md:flex-shrink-0 mb-8 md:mb-0 space-y-4">
+                <div className="md:flex-shrink-0 mb-8 md:mb-0 space-y-4 flex flex-col items-center md:items-start">
                   <div className="w-52 md:w-64 rounded-xl overflow-hidden ring-1 ring-border">
                     <Image
                       src="/Gemini_Generated_Image_n6c5r1n6c5r1n6c5.png"
@@ -319,7 +319,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-border py-10">
-        <div className="container flex items-center justify-between">
+        <div className="container flex flex-wrap items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} Andrei Iacob
           </p>
