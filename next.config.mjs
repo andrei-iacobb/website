@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/js/p.js',
-        destination: 'https://plausible.iacob.co.uk/js/pa-m1xwZ1hSkHyno5MdVsJ0G.js',
+        destination: 'https://plausible.iacob.co.uk/js/script.js',
       },
       {
         source: '/api/p',
