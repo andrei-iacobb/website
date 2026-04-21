@@ -25,8 +25,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "about.tech.p2":
       "Outside of application development, I run a GitOps-managed homelab on enterprise HP ProLiant servers, a Kubernetes cluster orchestrated with Flux CD on Talos Linux, behind Cloudflare tunnels, hosting everything from media services to local LLMs.",
 
+    "contributions.heading": "Constantly delivering",
+    "contributions.subtitle": "contributions in the last year",
+    "contributions.less": "Less",
+    "contributions.more": "More",
+
     "projects.heading": "Projects",
     "projects.subtitle": "A selection of things I've built.",
+    "projects.updated": "Updated",
     "projects.private.label": "Private Repository",
     "projects.private.note": "As per company requirements",
 
@@ -65,8 +71,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "about.tech.p2":
       "În afara dezvoltării de aplicații, administrez un homelab gestionat cu GitOps pe servere enterprise HP ProLiant, un cluster Kubernetes orchestrat cu Flux CD pe Talos Linux, în spatele tunelurilor Cloudflare, găzduind de la servicii media la LLM-uri locale.",
 
+    "contributions.heading": "Livrez constant",
+    "contributions.subtitle": "contribuții în ultimul an",
+    "contributions.less": "Mai puțin",
+    "contributions.more": "Mai mult",
+
     "projects.heading": "Proiecte",
     "projects.subtitle": "O selecție din lucrurile pe care le-am construit.",
+    "projects.updated": "Actualizat",
     "projects.private.label": "Repozitoriu Privat",
     "projects.private.note": "Conform cerințelor companiei",
 

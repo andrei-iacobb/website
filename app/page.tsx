@@ -3,8 +3,9 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Github, Linkedin, Mail, ArrowUpRight, Lock } from "lucide-react"
-import { InteractiveHeader } from "@/components/interactive-header"
 import { useLanguage } from "@/lib/language-context"
+import { useEffect, useState } from "react"
+import { ContributionGraph } from "@/components/contribution-graph"
 
 const projects = [
   {
@@ -12,12 +13,14 @@ const projects = [
     descKey: "project.neatplan.desc",
     tags: ["Next.js", "Prisma", "PostgreSQL", "TypeScript"],
     url: "https://github.com/andrei-iacobb/neatplan",
+    githubRepo: "neatplan",
   },
   {
     name: "HomeOps",
     descKey: "project.homeops.desc",
     tags: ["Kubernetes", "Flux CD", "Talos", "Proxmox"],
     url: "https://github.com/andrei-iacobb/homeops",
+    githubRepo: "homeops",
   },
   {
     name: "Visitor Management",
@@ -31,20 +34,23 @@ const projects = [
     descKey: "project.staffclock.desc",
     tags: ["Python", "PyQt6", "OpenCV"],
     url: "https://github.com/andrei-iacobb/staffclock",
+    githubRepo: "staffclock",
   },
   {
     name: "Informate",
     descKey: "project.informate.desc",
     tags: ["Java", "OpenAI", "NLP"],
     url: "https://github.com/andrei-iacobb/informate",
+    githubRepo: "informate",
   },
   {
     name: "Car Sales Finalised",
     descKey: "project.carsales.desc",
     tags: ["C", "Educational"],
     url: "https://github.com/andrei-iacobb/car_sales_finalised",
+    githubRepo: "car_sales_finalised",
   },
-] as const
+]
 
 const technologies = [
   "TypeScript", "JavaScript", "Python", "Java", "C#", "C", "C++", "SQL", "Bash",
@@ -58,12 +64,35 @@ const technologies = [
   "Git", "Linux", "ESP32", "Arduino",
 ]
 
+function formatRelativeTime(pushedAt: string, lang: string): string {
+  const diff = Date.now() - new Date(pushedAt).getTime()
+  const days = Math.floor(diff / 86400000)
+  const weeks = Math.floor(days / 7)
+  const months = Math.floor(days / 30)
+
+  const rtf = new Intl.RelativeTimeFormat(lang, { numeric: "auto" })
+  if (months >= 1) return rtf.format(-months, "month")
+  if (weeks >= 1) return rtf.format(-weeks, "week")
+  return rtf.format(-days, "day")
+}
+
 export default function Home() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
+  const [repoDates, setRepoDates] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    fetch("/api/github/repos")
+      .then((r) => r.json())
+      .then((data: { name: string; pushed_at: string }[]) => {
+        const map: Record<string, string> = {}
+        for (const repo of data) map[repo.name] = repo.pushed_at
+        setRepoDates(map)
+      })
+      .catch(() => {})
+  }, [])
 
   return (
     <div className="min-h-screen bg-background">
-      <InteractiveHeader />
 
       <main>
         {/* Hero */}
@@ -200,6 +229,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Contributions */}
+        <ContributionGraph />
+
         {/* Projects */}
         <section id="projects" className="py-24 md:py-32 scroll-mt-20">
           <div className="container">
@@ -271,6 +303,14 @@ export default function Home() {
                         </span>
                       ))}
                     </div>
+                    {"githubRepo" in project && project.githubRepo && repoDates[project.githubRepo] && (
+                      <time
+                        dateTime={repoDates[project.githubRepo]}
+                        className="block mt-3 text-xs text-muted-foreground"
+                      >
+                        {t("projects.updated")} {formatRelativeTime(repoDates[project.githubRepo], language)}
+                      </time>
+                    )}
                   </Link>
                 )
               )}
@@ -318,33 +358,6 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-border py-10">
-        <div className="container flex flex-wrap items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Andrei Iacob
-          </p>
-          <div className="flex items-center gap-5">
-            <Link
-              href="https://github.com/andrei-iacobb"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="h-5 w-5" />
-            </Link>
-            <Link
-              href="https://linkedin.com/in/andreigiacob"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

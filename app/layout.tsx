@@ -3,6 +3,8 @@ import "@/app/globals.css"
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/language-context"
+import { InteractiveHeader } from "@/components/interactive-header"
+import { SiteFooter } from "@/components/site-footer"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import { SITE_URL } from "@/lib/constants"
@@ -27,11 +29,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Andrei Iacob - Portfolio",
-    template: "%s | Andrei Iacob"
+    default: "Andrei Iacob",
+    template: "%s · Andrei Iacob"
   },
-  description: "Computer Science student passionate about building innovative solutions. Explore my projects, skills, and experience in web development, AI, and modern technologies.",
-  keywords: ["Andrei Iacob", "Computer Science", "Developer", "Portfolio", "React", "Next.js", "TypeScript", "Web Development"],
+  description: "CS student building full-stack apps, self-hosted infrastructure, and open source tools. andrei.iacob.co.uk",
+  keywords: ["Andrei Iacob", "Computer Science", "Developer", "React", "Next.js", "TypeScript", "Kubernetes"],
   authors: [{ name: "Andrei Iacob" }],
   creator: "Andrei Iacob",
   publisher: "Andrei Iacob",
@@ -50,14 +52,14 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: SITE_URL,
-    title: 'Andrei Iacob - Portfolio',
-    description: 'Computer Science student passionate about building innovative solutions. Explore my projects, skills, and experience.',
-    siteName: 'Andrei Iacob Portfolio',
+    title: 'Andrei Iacob',
+    description: 'CS student building full-stack apps, self-hosted infrastructure, and open source tools.',
+    siteName: 'Andrei Iacob',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Andrei Iacob - Portfolio',
-    description: 'Computer Science student passionate about building innovative solutions.',
+    title: 'Andrei Iacob',
+    description: 'CS student building full-stack apps, self-hosted infrastructure, and open source tools.',
   },
 }
 
@@ -90,7 +92,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${bricolage.variable} ${dmSans.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <LanguageProvider>
+            <InteractiveHeader />
             {children}
+            <SiteFooter />
           </LanguageProvider>
         </ThemeProvider>
       </body>
