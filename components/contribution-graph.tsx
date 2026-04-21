@@ -65,47 +65,66 @@ export function ContributionGraph() {
     }
   })
 
+  const cols = weeks.length
+
   return (
-    <section className="py-16 md:py-20 border-t border-border">
+    <section className="py-20 md:py-28 border-t border-border">
       <div className="container">
         <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
           {t("contributions.heading")}
         </h2>
         {total !== null && (
-          <p className="text-lg text-muted-foreground mb-10">
+          <p className="text-lg text-muted-foreground mb-12">
             {total.toLocaleString()} {t("contributions.subtitle")}
           </p>
         )}
 
-        <div className="overflow-x-auto pb-1">
-          <div className="inline-block min-w-max">
-            {/* Month labels */}
-            <div className="flex mb-2" style={{ gap: "3px" }}>
+        {/* Scrollable wrapper on mobile, flex-fill on desktop */}
+        <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0 pb-2">
+          {/* min-w ensures the graph stays readable on mobile (horizontal scroll) */}
+          <div className="min-w-[640px]">
+            {/* Month labels row — uses same grid as cells */}
+            <div
+              className="grid mb-2"
+              style={{
+                gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+                gap: "4px",
+              }}
+            >
               {weeks.map((_, i) => {
                 const pos = monthPositions.find((m) => m.col === i)
                 return (
-                  <div key={i} className="w-[11px] text-[10px] text-muted-foreground leading-none">
+                  <div
+                    key={i}
+                    className="text-[11px] md:text-xs text-muted-foreground leading-none"
+                  >
                     {pos ? pos.label : ""}
                   </div>
                 )
               })}
             </div>
 
-            {/* Grid: 7 rows × N cols */}
-            <div className="flex" style={{ gap: "3px" }}>
+            {/* Grid body: each column is a week, 7 rows for days */}
+            <div
+              className="grid"
+              style={{
+                gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+                gap: "4px",
+              }}
+            >
               {weeks.map((week, wi) => (
-                <div key={wi} className="flex flex-col" style={{ gap: "3px" }}>
+                <div key={wi} className="grid grid-rows-7" style={{ gap: "4px" }}>
                   {Array.from({ length: 7 }).map((_, di) => {
                     const day = week.contributionDays[di]
                     if (!day) {
-                      return <div key={di} className="w-[11px] h-[11px]" />
+                      return <div key={di} className="aspect-square" />
                     }
                     const level = getLevel(day.contributionCount)
                     return (
                       <div
                         key={di}
                         title={`${day.date}: ${day.contributionCount} contribution${day.contributionCount !== 1 ? "s" : ""}`}
-                        className={`w-[11px] h-[11px] rounded-[2px] ${levelClass[level]}`}
+                        className={`aspect-square rounded-[3px] ${levelClass[level]}`}
                       />
                     )
                   })}
@@ -114,11 +133,16 @@ export function ContributionGraph() {
             </div>
 
             {/* Legend */}
-            <div className="flex items-center justify-end gap-2 mt-3 text-[10px] text-muted-foreground">
+            <div className="flex items-center justify-end gap-2 mt-4 text-xs text-muted-foreground">
               <span>{t("contributions.less")}</span>
-              {[0, 1, 2, 3, 4].map((l) => (
-                <div key={l} className={`w-[11px] h-[11px] rounded-[2px] ${levelClass[l as 0 | 1 | 2 | 3 | 4]}`} />
-              ))}
+              <div className="flex gap-1">
+                {[0, 1, 2, 3, 4].map((l) => (
+                  <div
+                    key={l}
+                    className={`w-3 h-3 rounded-[3px] ${levelClass[l as 0 | 1 | 2 | 3 | 4]}`}
+                  />
+                ))}
+              </div>
               <span>{t("contributions.more")}</span>
             </div>
           </div>
