@@ -3,8 +3,6 @@ import "@/app/globals.css"
 import { Bricolage_Grotesque, DM_Sans, Instrument_Serif } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/language-context"
-import { InteractiveHeader } from "@/components/interactive-header"
-import { SiteFooter } from "@/components/site-footer"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import { SITE_URL } from "@/lib/constants"
@@ -100,9 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${bricolage.variable} ${dmSans.variable} ${instrumentSerif.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <LanguageProvider>
-            <InteractiveHeader />
             {children}
-            <SiteFooter />
           </LanguageProvider>
         </ThemeProvider>
       </body>
