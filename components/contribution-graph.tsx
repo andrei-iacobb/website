@@ -23,7 +23,7 @@ function getLevel(count: number): 0 | 1 | 2 | 3 | 4 {
   return 4
 }
 
-const levelClass: Record<0 | 1 | 2 | 3 | 4, string> = {
+const brandLevelClass: Record<0 | 1 | 2 | 3 | 4, string> = {
   0: "bg-muted",
   1: "bg-primary/20",
   2: "bg-primary/40",
@@ -31,7 +31,16 @@ const levelClass: Record<0 | 1 | 2 | 3 | 4, string> = {
   4: "bg-primary",
 }
 
-export function ContributionGraph() {
+const neutralLevelClass: Record<0 | 1 | 2 | 3 | 4, string> = {
+  0: "bg-white/[0.05]",
+  1: "bg-white/15",
+  2: "bg-white/30",
+  3: "bg-white/55",
+  4: "bg-white/85",
+}
+
+export function ContributionGraph({ tone = "brand" }: { tone?: "brand" | "neutral" } = {}) {
+  const levelClass = tone === "neutral" ? neutralLevelClass : brandLevelClass
   const { t, language } = useLanguage()
   const [weeks, setWeeks] = useState<Week[]>([])
   const [total, setTotal] = useState<number | null>(null)
@@ -83,67 +92,83 @@ export function ContributionGraph() {
         <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0 pb-2">
           {/* min-w ensures the graph stays readable on mobile (horizontal scroll) */}
           <div className="min-w-[640px]">
-            {/* Month labels row — uses same grid as cells */}
-            <div
-              className="grid mb-2"
-              style={{
-                gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-                gap: "4px",
-              }}
-            >
-              {weeks.map((_, i) => {
-                const pos = monthPositions.find((m) => m.col === i)
-                return (
-                  <div
-                    key={i}
-                    className="text-[11px] md:text-xs text-muted-foreground leading-none"
-                  >
-                    {pos ? pos.label : ""}
-                  </div>
-                )
-              })}
-            </div>
+            {/* Row layout: day labels column on the left, graph + month labels on the right — mirrors GitHub */}
+            <div className="flex gap-2">
+              {/* Day labels column (Mon / Wed / Fri) — matches GitHub's layout */}
+              <div className="flex flex-col justify-between pt-5 pb-1 shrink-0 w-7 text-[10px] md:text-[11px] text-muted-foreground leading-none">
+                <span className="h-[11px]" aria-hidden />
+                <span>{language === "ro" ? "Lun" : "Mon"}</span>
+                <span className="h-[11px]" aria-hidden />
+                <span>{language === "ro" ? "Mie" : "Wed"}</span>
+                <span className="h-[11px]" aria-hidden />
+                <span>{language === "ro" ? "Vin" : "Fri"}</span>
+                <span className="h-[11px]" aria-hidden />
+              </div>
 
-            {/* Grid body: each column is a week, 7 rows for days */}
-            <div
-              className="grid"
-              style={{
-                gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-                gap: "4px",
-              }}
-            >
-              {weeks.map((week, wi) => (
-                <div key={wi} className="grid grid-rows-7" style={{ gap: "4px" }}>
-                  {Array.from({ length: 7 }).map((_, di) => {
-                    const day = week.contributionDays[di]
-                    if (!day) {
-                      return <div key={di} className="aspect-square" />
-                    }
-                    const level = getLevel(day.contributionCount)
+              <div className="flex-1 min-w-0">
+                {/* Month labels row — uses same grid as cells */}
+                <div
+                  className="grid mb-2"
+                  style={{
+                    gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+                    gap: "4px",
+                  }}
+                >
+                  {weeks.map((_, i) => {
+                    const pos = monthPositions.find((m) => m.col === i)
                     return (
                       <div
-                        key={di}
-                        title={`${day.date}: ${day.contributionCount} contribution${day.contributionCount !== 1 ? "s" : ""}`}
-                        className={`aspect-square rounded-[3px] ${levelClass[level]}`}
-                      />
+                        key={i}
+                        className="text-[11px] md:text-xs text-muted-foreground leading-none"
+                      >
+                        {pos ? pos.label : ""}
+                      </div>
                     )
                   })}
                 </div>
-              ))}
-            </div>
 
-            {/* Legend */}
-            <div className="flex items-center justify-end gap-2 mt-4 text-xs text-muted-foreground">
-              <span>{t("contributions.less")}</span>
-              <div className="flex gap-1">
-                {[0, 1, 2, 3, 4].map((l) => (
-                  <div
-                    key={l}
-                    className={`w-3 h-3 rounded-[3px] ${levelClass[l as 0 | 1 | 2 | 3 | 4]}`}
-                  />
-                ))}
+                {/* Grid body: each column is a week, 7 rows for days */}
+                <div
+                  className="grid"
+                  style={{
+                    gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+                    gap: "4px",
+                  }}
+                >
+                  {weeks.map((week, wi) => (
+                    <div key={wi} className="grid grid-rows-7" style={{ gap: "4px" }}>
+                      {Array.from({ length: 7 }).map((_, di) => {
+                        const day = week.contributionDays[di]
+                        if (!day) {
+                          return <div key={di} className="aspect-square" />
+                        }
+                        const level = getLevel(day.contributionCount)
+                        return (
+                          <div
+                            key={di}
+                            title={`${day.date}: ${day.contributionCount} contribution${day.contributionCount !== 1 ? "s" : ""}`}
+                            className={`aspect-square rounded-[3px] ${levelClass[level]}`}
+                          />
+                        )
+                      })}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Legend */}
+                <div className="flex items-center justify-end gap-2 mt-4 text-xs text-muted-foreground">
+                  <span>{t("contributions.less")}</span>
+                  <div className="flex gap-1">
+                    {[0, 1, 2, 3, 4].map((l) => (
+                      <div
+                        key={l}
+                        className={`w-3 h-3 rounded-[3px] ${levelClass[l as 0 | 1 | 2 | 3 | 4]}`}
+                      />
+                    ))}
+                  </div>
+                  <span>{t("contributions.more")}</span>
+                </div>
               </div>
-              <span>{t("contributions.more")}</span>
             </div>
           </div>
         </div>

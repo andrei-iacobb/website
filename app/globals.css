@@ -73,6 +73,496 @@
   .animate-fade-up {
     animation: fade-up 0.5s ease-out both;
   }
+
+  /* Paco Coursey stagger — zero-JS sequential reveal */
+  [data-animate] {
+    --stagger: 0;
+    --delay: 90ms;
+    --start: 100ms;
+    animation: data-animate-enter 0.7s both cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation-delay: calc(var(--stagger) * var(--delay) + var(--start));
+  }
+
+  @keyframes data-animate-enter {
+    0% {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Scroll progress bar via scroll-timeline (zero JS) */
+  @keyframes scroll-progress-grow {
+    from {
+      scale: 0 1;
+    }
+    to {
+      scale: 1 1;
+    }
+  }
+
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: hsl(var(--primary));
+    transform-origin: 0 50%;
+    z-index: 100;
+    animation: scroll-progress-grow linear both;
+    animation-timeline: scroll(root block);
+    pointer-events: none;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: none;
+    }
+  }
+
+  /* Animated gradient border via @property */
+  @property --border-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+      conic-gradient(
+        from var(--border-angle),
+        hsl(var(--primary) / 0.9),
+        hsl(var(--primary) / 0.05),
+        hsl(var(--primary) / 0.05),
+        hsl(var(--primary) / 0.05),
+        hsl(var(--primary) / 0.9)
+      )
+      border-box;
+    animation: rotate-border 6s linear infinite;
+  }
+
+  @keyframes rotate-border {
+    to {
+      --border-angle: 360deg;
+    }
+  }
+
+  /* Subtle background grid */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.4) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.4) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Radial ambient spotlight */
+  .bg-spotlight {
+    background-image: radial-gradient(
+      50% 50% at 50% 30%,
+      hsl(var(--primary) / 0.12) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Tabular-nums for stats */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Marquee */
+  @keyframes marquee-slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track {
+    animation: marquee-slide 40s linear infinite;
+  }
+
+  .marquee-mask {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+}
+
+/* ──────────────────────────────────────────────
+   Preview shell — minimal editorial (Route A)
+   Composite: Lee Robinson + Mariana Castilho + Rauno
+   Zero brand color in UI chrome. ONE ::selection chromatic moment.
+   ────────────────────────────────────────────── */
+
+.preview-shell {
+  --accent: 175 84% 42%;
+  --accent-soft: 175 84% 55%;
+  isolation: isolate;
+  position: relative;
+}
+
+.preview-shell ::selection {
+  background: hsl(var(--accent) / 0.35);
+  color: #fff;
+  text-shadow: none;
+}
+
+/* Live aurora background — solid #0a0a0a paints first,
+   animated teal blobs fade in 300ms after mount.
+   Fixed to viewport; outer wrapper = scroll-linked parallax,
+   inner core = time-based breathing drift. */
+.preview-live-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  animation: preview-bg-reveal 900ms 300ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  overflow: hidden;
+}
+
+/* Outer blob wrapper — handles scroll-linked translate via animation-timeline */
+.preview-blob {
+  position: absolute;
+  will-change: transform;
+}
+
+/* Inner core — time-based breathing drift + radial gradient + blur.
+   Transform here composes with the outer parallax transform automatically. */
+.preview-blob-core {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  filter: blur(120px);
+  will-change: transform;
+}
+
+/* Primary teal blob — top-left origin */
+.preview-blob--a {
+  width: 52vw;
+  height: 52vw;
+  top: -12vw;
+  left: -14vw;
+  animation: preview-blob-scroll-a linear;
+  animation-timeline: scroll(root block);
+}
+.preview-blob--a .preview-blob-core {
+  background: radial-gradient(
+    circle at center,
+    hsl(var(--accent) / 0.28),
+    hsl(var(--accent) / 0.06) 45%,
+    transparent 72%
+  );
+  animation: preview-blob-drift-a 34s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+}
+
+/* Softer accent blob — bottom-right origin, counter-drift */
+.preview-blob--b {
+  width: 62vw;
+  height: 62vw;
+  bottom: -22vw;
+  right: -22vw;
+  animation: preview-blob-scroll-b linear;
+  animation-timeline: scroll(root block);
+}
+.preview-blob--b .preview-blob-core {
+  background: radial-gradient(
+    circle at center,
+    hsl(var(--accent-soft) / 0.18),
+    hsl(var(--accent-soft) / 0.04) 45%,
+    transparent 72%
+  );
+  animation: preview-blob-drift-b 46s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  animation-delay: -14s;
+}
+
+/* Content floats above the live bg */
+.preview-shell > header,
+.preview-shell > main,
+.preview-shell > footer {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes preview-bg-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Time-based breathing — organic drift regardless of scroll */
+@keyframes preview-blob-drift-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(14vw, 18vh, 0) scale(1.22);
+  }
+}
+
+@keyframes preview-blob-drift-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-10vw, -14vh, 0) scale(1.18);
+  }
+}
+
+/* Scroll-linked parallax — primary blob drops down as you scroll */
+@keyframes preview-blob-scroll-a {
+  from {
+    transform: translate3d(0, -8vh, 0);
+  }
+  to {
+    transform: translate3d(12vw, 40vh, 0);
+  }
+}
+
+/* Scroll-linked parallax — secondary blob rises up the opposite way */
+@keyframes preview-blob-scroll-b {
+  from {
+    transform: translate3d(0, 8vh, 0);
+  }
+  to {
+    transform: translate3d(-14vw, -35vh, 0);
+  }
+}
+
+/* Fallback for browsers without scroll-timeline (Safari <26, old Firefox) */
+@supports not (animation-timeline: scroll()) {
+  .preview-blob--a,
+  .preview-blob--b {
+    animation: none;
+  }
+}
+
+/* prefers-reduced-motion: keep solid bg, no drift or parallax */
+@media (prefers-reduced-motion: reduce) {
+  .preview-live-bg {
+    animation-delay: 0s;
+    animation-duration: 0.01ms;
+    opacity: 0.5;
+  }
+  .preview-blob,
+  .preview-blob-core {
+    animation: none !important;
+  }
+}
+
+/* ──── Starfield ────
+   Sits inside preview-live-bg (inherits the 900ms fade-in so stars
+   appear gently after the solid bg paints). Outer layer drifts
+   upward on scroll via animation-timeline — moves less than the
+   blobs, creating a depth cue (stars are "further away"). Each
+   star twinkles on its own deterministic schedule. */
+.preview-stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.preview-stars-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20vh;
+  height: 140vh;
+  will-change: transform;
+  animation: preview-stars-scroll linear;
+  animation-timeline: scroll(root block);
+}
+
+.preview-star {
+  position: absolute;
+  display: block;
+  background: #fff;
+  border-radius: 50%;
+  will-change: opacity, transform;
+  animation-name: preview-star-twinkle;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.preview-star--bright {
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.55);
+}
+
+.preview-star--tinted {
+  background: hsl(var(--accent-soft));
+  box-shadow: 0 0 6px hsl(var(--accent-soft) / 0.6);
+}
+
+@keyframes preview-star-twinkle {
+  0%,
+  100% {
+    opacity: var(--star-lo, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    opacity: var(--star-hi, 0.85);
+    transform: scale(1.35);
+  }
+}
+
+@keyframes preview-stars-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -12vh, 0);
+  }
+}
+
+@supports not (animation-timeline: scroll()) {
+  .preview-stars-layer {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-stars-layer,
+  .preview-star {
+    animation: none !important;
+  }
+}
+
+/* Hero entry — 400ms fade + 6px lift. No stagger. */
+.preview-shell .hero-enter {
+  animation: preview-hero-enter 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes preview-hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Editorial border-bottom link (Mariana / Rauchg) — teal-lift on hover */
+.preview-shell .editorial-link {
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding-bottom: 1px;
+  transition: border-color 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.preview-shell .editorial-link:hover {
+  border-bottom-color: hsl(var(--accent-soft));
+  color: hsl(var(--accent-soft));
+}
+
+/* Archive row hover — subtle row tint + title color shift, no layout shift */
+.preview-shell .archive-row {
+  transition: background-color 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  margin-inline: -16px;
+  padding-inline: 16px;
+}
+.preview-shell .archive-row:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+.preview-shell .archive-row .archive-title {
+  background-image: linear-gradient(
+    hsl(var(--accent-soft)),
+    hsl(var(--accent-soft))
+  );
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.preview-shell .archive-row:hover .archive-title {
+  background-size: 100% 1px;
+  color: hsl(var(--accent-soft));
+}
+.preview-shell .archive-row--static {
+  cursor: default;
+}
+
+/* Focus ring — double-shadow, works on dark bg */
+.preview-shell a:focus-visible,
+.preview-shell button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #0a0a0a,
+    0 0 0 4px rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+}
+
+/* Contact email — serif italic, teal underline-fill */
+.preview-shell .contact-email {
+  color: hsl(var(--accent-soft));
+  background-image: linear-gradient(
+    hsl(var(--accent-soft)),
+    hsl(var(--accent-soft))
+  );
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  padding-bottom: 2px;
+  transition: color 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.preview-shell .contact-email:hover {
+  opacity: 0.85;
+}
+
+/* Skip link — visually hidden until focused */
+.preview-skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  color: #0a0a0a;
+  border-radius: 2px;
+  transform: translateY(-200%);
+  transition: transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.preview-skip-link:focus {
+  transform: translateY(0);
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 @media (prefers-reduced-motion: reduce) {

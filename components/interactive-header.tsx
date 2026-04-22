@@ -12,6 +12,9 @@ const navItems = [
 export function InteractiveHeader() {
   const pathname = usePathname()
 
+  // Preview uses its own shell
+  if (pathname?.startsWith("/preview")) return null
+
   return (
     <div className="container flex items-center justify-between pt-6 pb-2">
       <Link

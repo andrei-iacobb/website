@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Github, Linkedin } from "lucide-react"
 
 const pages = [
@@ -6,6 +9,11 @@ const pages = [
 ]
 
 export function SiteFooter() {
+  const pathname = usePathname()
+
+  // Preview uses its own shell
+  if (pathname?.startsWith("/preview")) return null
+
   return (
     <footer className="border-t border-border py-10">
       <div className="container flex flex-wrap items-center justify-between gap-6">

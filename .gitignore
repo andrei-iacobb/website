@@ -30,4 +30,6 @@ next-env.d.ts
 
 # Playwright
 .playwright-mcp/
-contrib-graph.png
+
+# Dev screenshots at repo root
+/*.png

@@ -1,6 +1,6 @@
 import type React from "react"
 import "@/app/globals.css"
-import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
+import { Bricolage_Grotesque, DM_Sans, Instrument_Serif } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/language-context"
 import { InteractiveHeader } from "@/components/interactive-header"
@@ -19,6 +19,14 @@ const dmSans = DM_Sans({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-dm-sans",
+})
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-serif",
 })
 
 export const viewport: Viewport = {
@@ -89,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
       </head>
 
-      <body className={`${bricolage.variable} ${dmSans.variable} font-sans antialiased`}>
+      <body className={`${bricolage.variable} ${dmSans.variable} ${instrumentSerif.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <LanguageProvider>
             <InteractiveHeader />
