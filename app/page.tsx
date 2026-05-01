@@ -38,7 +38,7 @@ const STARS = (() => {
 
 const projects = [
   {
-    year: "2024",
+    year: "2025",
     name: "NeatPlan",
     kind: "Cleaning-ops SaaS with live tracking and scheduling.",
     role: "Commissioned",
@@ -52,7 +52,7 @@ const projects = [
     url: "https://github.com/andrei-iacobb/homeops",
   },
   {
-    year: "2024",
+    year: "2026",
     name: "Visitor Management",
     kind: "Multi-site check-in with Android kiosks and contractor validation",
     role: "Commissioned",
@@ -60,21 +60,21 @@ const projects = [
     locked: true,
   },
   {
-    year: "2023",
+    year: "2024",
     name: "StaffClock",
     kind: "Facial-recognition time tracking + payroll exports",
     role: "Commissioned",
     url: "https://github.com/andrei-iacobb/staffclock",
   },
   {
-    year: "2023",
+    year: "2025",
     name: "Informate",
     kind: "AI news summariser built with Java and OpenAI.",
     role: "Built solo",
     url: "https://github.com/andrei-iacobb/informate",
   },
   {
-    year: "2022",
+    year: "2024",
     name: "Car Sales",
     kind: "Inventory tracker written in C for the fun of bare metal",
     role: "Uni project",
@@ -167,15 +167,6 @@ export default function Preview() {
           className="relative mx-auto max-w-5xl px-6 md:px-10 pt-14 md:pt-20 pb-14 md:pb-18"
         >
           <div className="hero-enter">
-            {/* mono eyebrow with live-pulse dot — teal accent */}
-            <p className="flex items-center gap-2 font-mono text-[12px] text-white/55 mb-10 md:mb-14">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-[hsl(175_84%_42%)] animate-ping" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[hsl(175_84%_42%)]" />
-              </span>
-              Available for contract, May 2026
-            </p>
-
             {/* Serif name, right-aligned */}
             <h1
               className="font-serif text-right leading-[0.92] tracking-[-0.03em] text-white"
@@ -190,8 +181,6 @@ export default function Preview() {
                 I build web apps and look after the servers they run on.
               </p>
               <p className="font-mono text-[12px] text-white/45 md:text-right self-end">
-                Mainly Suffolk, available remote
-                <br />
                 BSc Computer Science
               </p>
             </div>
@@ -234,29 +223,21 @@ export default function Preview() {
                 </p>
                 <p>
                   I got into this fixing people&apos;s computers. Eventually
-                  that turned into fixing their small businesses, and then
-                  writing the software they&apos;d been avoiding buying.
+                  that turned into building the software they&apos;d been
+                  avoiding buying.
                 </p>
                 <p>
                   These days it&apos;s mostly Next.js and Postgres, with a
                   small cluster in my garage running the bits I host myself.
-                  I freelance for small companies, mostly IT support and
-                  custom internal apps. If you&apos;ve got something that
-                  needs building, my inbox is{" "}
-                  <a
-                    href="#contact"
-                    className="editorial-link text-white hover:text-white"
-                  >
-                    below
-                  </a>
-                  .
+                  I develop for various companies, mostly IT support and
+                  custom internal apps.
                 </p>
               </div>
 
               <dl className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 font-mono text-[12px]">
                 {[
                   ["Degree", "BSc Computer Science"],
-                  ["Freelance", "IT support and app dev"],
+                  ["Work", "App development and IT support"],
                   ["Stack", "Next.js, Postgres, Kubernetes"],
                   ["Reading", "Designing Data-Intensive Applications"],
                   ["Coffee", "Filter, any roaster"],
@@ -269,6 +250,7 @@ export default function Preview() {
               </dl>
             </div>
           </div>
+
         </section>
 
         {/* ————— Selected work — archive list (Rauchg variant) ————— */}
@@ -378,8 +360,7 @@ export default function Preview() {
             Let&apos;s <span className="italic text-[hsl(175_84%_55%)]">talk</span>.
           </h2>
           <p className="mt-8 max-w-xl text-[17px] leading-[1.6] text-white/65">
-            Available from May 2026, contract or permanent. Full-stack work,
-            IT support, or infra. Happy with any of those.
+            Got a project? Drop me a line.
           </p>
 
           <a
