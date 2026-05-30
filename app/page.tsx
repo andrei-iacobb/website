@@ -204,7 +204,7 @@ export default function Preview() {
               <div className="aspect-[4/5] overflow-hidden rounded-sm bg-white/[0.03]">
                 <Image
                   src="/IMG_3962.jpeg"
-                  alt="Andrei"
+                  alt="Andrei Iacob, software developer"
                   width={520}
                   height={650}
                   sizes="(max-width: 768px) 100vw, 260px"
@@ -218,8 +218,9 @@ export default function Preview() {
             <div className="max-w-[58ch]">
               <div className="space-y-6 text-[17px] leading-[1.6] text-white/80">
                 <p>
-                  I&apos;m Andrei. I build web apps and look after the
-                  servers they run on, usually the same week.
+                  I&apos;m Andrei Iacob - Andrei Gabriel Iacob in full. I
+                  build web apps and look after the servers they run on,
+                  usually the same week.
                 </p>
                 <p>
                   I got into this fixing people&apos;s computers. Eventually

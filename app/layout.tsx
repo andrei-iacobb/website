@@ -34,15 +34,19 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Andrei Iacob",
+    default: "Andrei Iacob - Software Developer",
     template: "%s · Andrei Iacob"
   },
-  description: "CS student building full-stack apps, self-hosted infrastructure, and open source tools. andrei.iacob.co.uk",
-  keywords: ["Andrei Iacob", "Computer Science", "Developer", "React", "Next.js", "TypeScript", "Kubernetes"],
-  authors: [{ name: "Andrei Iacob" }],
+  description: "Andrei Iacob (Andrei Gabriel Iacob) - software developer and Computer Science student building full-stack web apps, self-hosted infrastructure, and open source tools.",
+  keywords: ["Andrei Iacob", "Andrei Gabriel Iacob", "Iacob", "Andrei", "Computer Science", "Software Developer", "React", "Next.js", "TypeScript", "Kubernetes", "Bury St Edmunds"],
+  authors: [{ name: "Andrei Iacob", url: SITE_URL }],
   creator: "Andrei Iacob",
   publisher: "Andrei Iacob",
+  alternates: {
+    canonical: '/',
+  },
   robots: {
     index: true,
     follow: true,
@@ -55,24 +59,93 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
+    type: 'profile',
+    firstName: 'Andrei',
+    lastName: 'Iacob',
+    locale: 'en_GB',
     url: SITE_URL,
-    title: 'Andrei Iacob',
-    description: 'CS student building full-stack apps, self-hosted infrastructure, and open source tools.',
+    title: 'Andrei Iacob - Software Developer',
+    description: 'Software developer and Computer Science student building full-stack web apps, self-hosted infrastructure, and open source tools.',
     siteName: 'Andrei Iacob',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Andrei Iacob',
-    description: 'CS student building full-stack apps, self-hosted infrastructure, and open source tools.',
+    title: 'Andrei Iacob - Software Developer',
+    description: 'Software developer and Computer Science student building full-stack web apps, self-hosted infrastructure, and open source tools.',
   },
+  // After deploying, register the site in Google Search Console and paste the
+  // verification token here (or use the DNS method) to claim the property.
+  // verification: { google: 'PASTE_TOKEN_HERE' },
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Andrei Iacob",
+      alternateName: ["Andrei Gabriel Iacob", "Andrei G. Iacob"],
+      givenName: "Andrei",
+      additionalName: "Gabriel",
+      familyName: "Iacob",
+      url: SITE_URL,
+      image: `${SITE_URL}/opengraph-image`,
+      jobTitle: "Software Developer",
+      description:
+        "Software developer and Computer Science student building full-stack web apps, self-hosted infrastructure, and open source tools.",
+      knowsAbout: [
+        "Software Development",
+        "Web Development",
+        "Next.js",
+        "React",
+        "TypeScript",
+        "PostgreSQL",
+        "Kubernetes",
+        "Self-hosting",
+        "DevOps",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Bury St Edmunds",
+        addressRegion: "Suffolk",
+        addressCountry: "GB",
+      },
+      sameAs: [
+        "https://github.com/andrei-iacobb",
+        "https://linkedin.com/in/andreigiacob",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Andrei Iacob",
+      description:
+        "Portfolio of Andrei Iacob - software developer and Computer Science student.",
+      publisher: { "@id": `${SITE_URL}/#person` },
+      inLanguage: "en-GB",
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${SITE_URL}/#profilepage`,
+      url: SITE_URL,
+      name: "Andrei Iacob - Software Developer",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": `${SITE_URL}/#person` },
+      mainEntity: { "@id": `${SITE_URL}/#person` },
+    },
+  ],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+    <html lang="en-GB" suppressHydrationWarning className="scroll-smooth">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
