@@ -95,13 +95,17 @@ async function fetchFromGitHub(): Promise<ContributionPayload | null> {
 async function fetchForgejoByDate(): Promise<Record<string, number>> {
   const token = process.env.FORGEJO_TOKEN
   if (!token) return {}
+  const ctrl = new AbortController()
+  const timer = setTimeout(() => ctrl.abort(), 4000)
   try {
     const res = await fetch("https://git.iacob.co.uk/api/v1/users/andrei/heatmap", {
       headers: { Authorization: `token ${token}` },
       next: { revalidate: 3600 },
+      signal: ctrl.signal,
     })
     if (!res.ok) return {}
     const data = (await res.json()) as { timestamp: number; contributions: number }[]
+    if (!Array.isArray(data)) return {}
     const byDate: Record<string, number> = {}
     for (const e of data) {
       const iso = new Date(e.timestamp * 1000).toISOString().slice(0, 10)
@@ -110,6 +114,8 @@ async function fetchForgejoByDate(): Promise<Record<string, number>> {
     return byDate
   } catch {
     return {}
+  } finally {
+    clearTimeout(timer)
   }
 }
 
