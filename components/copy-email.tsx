@@ -37,7 +37,7 @@ export function CopyEmail() {
       </button>
       <span
         aria-live="polite"
-        className="font-mono text-[12px] uppercase tracking-[0.16em] text-ink/45"
+        className="font-mono text-[12px] uppercase tracking-[0.16em] text-ink/65"
       >
         {copied ? "Copied" : "Click to copy"}
       </span>

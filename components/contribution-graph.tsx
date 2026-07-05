@@ -79,13 +79,13 @@ export function ContributionGraph() {
           href={FORGEJO}
           target="_blank"
           rel="noopener noreferrer"
-          className="editorial-link font-mono text-[12px] text-ink/50 hover:text-ink transition-colors"
+          className="editorial-link font-mono text-[12px] text-ink/65 hover:text-ink transition-colors"
         >
           git.iacob.co.uk/andrei →
         </a>
       </div>
       {total !== null && (
-        <p className="text-[17px] text-ink/55 mb-12">
+        <p className="text-[17px] text-ink/65 mb-12">
           <CountUp
             value={total}
             className="tabular-nums text-ink/85 font-medium"
@@ -104,7 +104,7 @@ export function ContributionGraph() {
         <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0 pb-2">
           <div className="min-w-[680px]">
             <div className="flex gap-2.5">
-              <div className="flex flex-col justify-between pt-6 pb-1 shrink-0 w-8 text-[11px] text-ink/40 leading-none">
+              <div className="flex flex-col justify-between pt-6 pb-1 shrink-0 w-8 text-[11px] text-ink/65 leading-none">
                 <span className="h-[12px]" aria-hidden />
                 <span>{language === "ro" ? "Lun" : "Mon"}</span>
                 <span className="h-[12px]" aria-hidden />
@@ -127,7 +127,7 @@ export function ContributionGraph() {
                     return (
                       <div
                         key={i}
-                        className="text-[11px] text-ink/40 leading-none"
+                        className="text-[11px] text-ink/65 leading-none"
                       >
                         {pos ? pos.label : ""}
                       </div>
@@ -162,7 +162,7 @@ export function ContributionGraph() {
                   ))}
                 </div>
 
-                <div className="flex items-center justify-end gap-2 mt-5 text-[12px] text-ink/45">
+                <div className="flex items-center justify-end gap-2 mt-5 text-[12px] text-ink/65">
                   <span>{t("contributions.less")}</span>
                   <div className="flex gap-1">
                     {[0, 1, 2, 3, 4].map((l) => (

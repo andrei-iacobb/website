@@ -40,16 +40,16 @@ export function SiteHeader() {
       >
         <Link
           href="/"
-          className="inline-flex items-center min-h-[44px] font-display text-[17px] font-bold tracking-tight text-ink hover:opacity-70 transition-opacity"
+          className="inline-flex items-center min-h-[44px] font-display text-[15px] sm:text-[17px] font-bold tracking-tight text-ink hover:opacity-70 transition-opacity"
         >
           Andrei Iacob
         </Link>
-        <ul className="hidden sm:flex items-center gap-6 md:gap-8">
+        <ul className="flex items-center gap-4 sm:gap-6 md:gap-8">
           {nav.map((n) => (
             <li key={n.href}>
               <a
                 href={n.href}
-                className="editorial-link inline-flex items-center min-h-[44px] text-[14px] text-ink/60 hover:text-ink transition-colors"
+                className="editorial-link inline-flex items-center min-h-[44px] text-[13px] sm:text-[14px] text-ink/65 hover:text-ink transition-colors"
               >
                 {n.label}
               </a>

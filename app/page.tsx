@@ -57,7 +57,7 @@ const now = [
   "Growing the homelab and the services it runs.",
 ]
 
-const eyebrow = "font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-ink/45"
+const eyebrow = "font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-ink/65"
 const SHELL = "mx-auto w-full max-w-[82rem] px-6 md:px-10 lg:px-16"
 const h2Style = "font-display font-bold text-[clamp(36px,5.5vw,76px)] tracking-[-0.02em] leading-[0.95] text-ink"
 
@@ -103,12 +103,12 @@ export default function Page() {
               </div>
               <div data-animate style={stagger(4)} className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[13px]">
                 {heroSocials.map((s) => (
-                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="editorial-link text-ink/55 hover:text-ink">
+                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="editorial-link text-ink/65 hover:text-ink">
                     {s.label}
                   </a>
                 ))}
               </div>
-              <p className="mt-10 font-mono text-[13px] text-ink/55">
+              <p className="mt-10 font-mono text-[13px] text-ink/65">
                 <span className="status-dot mr-2.5 align-middle" aria-hidden />
                 Currently: multi-site visitor management · commissioned apps · the homelab · BSc Computer Science
               </p>
@@ -133,22 +133,22 @@ export default function Page() {
         <section id="work" aria-labelledby="work-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12 md:mb-16">
             <h2 id="work-label" className={h2Style}>Selected work</h2>
-            <p className="text-[16px] text-ink/60 max-w-sm">A handful of what I&apos;ve shipped. Some paid, some open source, some just for me.</p>
+            <p className="text-[16px] text-ink/65 max-w-sm">A handful of what I&apos;ve shipped. Some paid, some open source, some just for me.</p>
           </div>
           <ul className="border-t border-ink/15">
             {projects.map((p) => {
               const Row = (
                 <div className="grid grid-cols-[1fr_auto] md:grid-cols-[140px_1fr_160px] gap-x-6 gap-y-2 items-baseline py-7 md:py-8">
-                  <span className="order-2 md:order-1 font-mono text-[13px] text-ink/45 tabular-nums whitespace-nowrap">{p.year}</span>
+                  <span className="order-2 md:order-1 font-mono text-[13px] text-ink/65 tabular-nums whitespace-nowrap">{p.year}</span>
                   <div className="order-1 md:order-2 col-span-2 md:col-span-1 min-w-0">
                     <div className="flex items-center gap-3">
                       <span className="archive-title font-display text-[24px] md:text-[30px] font-semibold text-ink tracking-[-0.01em] leading-none">{p.name}</span>
-                      {p.locked && <span className="font-sans text-[10px] uppercase tracking-[0.14em] text-ink/45 border border-ink/20 rounded-full px-2.5 py-0.5">Private</span>}
+                      {p.locked && <span className="font-sans text-[10px] uppercase tracking-[0.14em] text-ink/65 border border-ink/20 rounded-full px-2.5 py-0.5">Private</span>}
                       {p.url && <span aria-hidden className="text-ink/30 text-[18px] opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">↗</span>}
                     </div>
-                    <p className="mt-2.5 text-[15px] md:text-[16px] leading-relaxed text-ink/60 max-w-[52ch]">{p.kind}</p>
+                    <p className="mt-2.5 text-[15px] md:text-[16px] leading-relaxed text-ink/65 max-w-[52ch]">{p.kind}</p>
                   </div>
-                  <span className="order-3 font-sans text-[12px] uppercase tracking-[0.14em] text-ink/45 md:text-right self-center">{p.role}</span>
+                  <span className="order-3 font-sans text-[12px] uppercase tracking-[0.14em] text-ink/65 md:text-right self-center">{p.role}</span>
                 </div>
               )
               return (
@@ -158,7 +158,7 @@ export default function Page() {
               )
             })}
           </ul>
-          <p className="mt-10 text-[15px] text-ink/55">
+          <p className="mt-10 text-[15px] text-ink/65">
             Everything else lives on{" "}
             <a href="https://github.com/andrei-iacobb" target="_blank" rel="noopener noreferrer" className="editorial-link text-ink/80 hover:text-ink">github.com/andrei-iacobb</a>.
           </p>
@@ -168,13 +168,13 @@ export default function Page() {
         <section id="services" aria-labelledby="services-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12 md:mb-16">
             <h2 id="services-label" className={h2Style}>What I do</h2>
-            <p className="text-[16px] text-ink/60 max-w-sm">Three things, done properly. Often all three for the same client.</p>
+            <p className="text-[16px] text-ink/65 max-w-sm">Three things, done properly. Often all three for the same client.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-10">
             {services.map((s) => (
               <div key={s.t} className="border-t border-ink/15 pt-5">
                 <h3 className="font-display text-[19px] font-semibold text-ink tracking-[-0.01em]">{s.t}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-ink/60">{s.d}</p>
+                <p className="mt-3 text-[15px] leading-relaxed text-ink/65">{s.d}</p>
               </div>
             ))}
           </div>
@@ -189,7 +189,7 @@ export default function Page() {
                 <div className="aspect-[4/3] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
                   <Image src="/IMG_3905.jpeg" alt="Andrei's desk setup: dual monitors, MacBook and a custom RTX PC" width={1200} height={900} sizes="(max-width: 1024px) 0px, 340px" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 </div>
-                <p className="mt-3 font-sans text-[12px] text-ink/45">Where the building happens.</p>
+                <p className="mt-3 font-sans text-[12px] text-ink/65">Where the building happens.</p>
               </div>
             </div>
             <div className="max-w-[44ch]">
@@ -205,7 +205,7 @@ export default function Page() {
             {homelabStats.map(([n, label]) => (
               <div key={label}>
                 <dt className="font-display font-bold text-[30px] md:text-[38px] leading-none tracking-[-0.02em] text-ink">{n}</dt>
-                <dd className="mt-2.5 text-[14px] text-ink/60">{label}</dd>
+                <dd className="mt-2.5 text-[14px] text-ink/65">{label}</dd>
               </div>
             ))}
           </dl>
@@ -234,7 +234,7 @@ export default function Page() {
                   ))}
                 </ul>
               </div>
-              <p className="mt-10 font-mono text-[13px] text-ink/50">Next.js · TypeScript · Postgres · Kubernetes · Docker · Linux</p>
+              <p className="mt-10 font-mono text-[13px] text-ink/65">Next.js · TypeScript · Postgres · Kubernetes · Docker · Linux</p>
             </div>
             <div className="relative group">
               <div className="aspect-[4/5] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
@@ -246,8 +246,8 @@ export default function Page() {
 
         {/* ----- Contact ----- */}
         <section id="contact" aria-labelledby="contact-label" className={`${SHELL} py-24 md:py-36 border-t border-ink/12 scroll-mt-24`}>
-          <p id="contact-label" className={`${eyebrow} mb-8`}>Contact</p>
-          <h2 className="font-display font-bold leading-[0.95] tracking-[-0.02em] text-ink text-[clamp(40px,6.5vw,96px)]">Let&apos;s build something.</h2>
+          <p className={`${eyebrow} mb-8`}>Contact</p>
+          <h2 id="contact-label" className="font-display font-bold leading-[0.95] tracking-[-0.02em] text-ink text-[clamp(40px,6.5vw,96px)]">Let&apos;s build something.</h2>
           <p className="mt-10 max-w-xl text-[19px] leading-[1.6] text-ink/65">Got a project, or just want to talk shop? My inbox is open.</p>
           <div className="mt-10"><CopyEmail /></div>
           <ul className="mt-12 flex flex-wrap gap-x-10 gap-y-3 text-[15px]">
@@ -262,13 +262,13 @@ export default function Page() {
 
       <footer className="border-t border-ink/12">
         <div className={`${SHELL} py-10 flex flex-wrap items-center justify-between gap-x-10 gap-y-4`}>
-          <p className="text-[13px] text-ink/45">&copy; {new Date().getFullYear()} Andrei Iacob</p>
+          <p className="text-[13px] text-ink/65">&copy; {new Date().getFullYear()} Andrei Iacob</p>
           <nav aria-label="Footer" className="flex flex-wrap gap-x-7 gap-y-2">
             {nav.map((n) => (
-              <a key={n.href} href={n.href} className="text-[13px] text-ink/55 hover:text-ink transition-colors">{n.label}</a>
+              <a key={n.href} href={n.href} className="text-[13px] text-ink/65 hover:text-ink transition-colors">{n.label}</a>
             ))}
           </nav>
-          <p className="inline-flex items-center gap-2 text-[13px] text-ink/45">
+          <p className="inline-flex items-center gap-2 text-[13px] text-ink/65">
             <span className="status-dot" aria-hidden />
             Built with Next.js, running on the homelab
           </p>

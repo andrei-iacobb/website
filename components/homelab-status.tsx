@@ -44,11 +44,27 @@ function MsSkeleton() {
   return <span className="h-3 w-10 shrink-0 rounded bg-ink/10 animate-pulse" aria-hidden />
 }
 
+// Isolated so the 1s tick re-renders only this label, not the whole card.
+function UpdatedAgo({ checkedAt }: { checkedAt: string | null }) {
+  const [ago, setAgo] = useState(0)
+
+  // Remounted via `key={checkedAt}` on each poll, so `ago` starts fresh at 0.
+  useEffect(() => {
+    const tick = setInterval(() => setAgo((a) => a + 1), 1000)
+    return () => clearInterval(tick)
+  }, [])
+
+  return (
+    <span className="font-mono text-[11px] text-ink/65">
+      {checkedAt ? (ago < 2 ? "live" : `updated ${ago}s ago`) : "live"}
+    </span>
+  )
+}
+
 export function HomelabStatus() {
   const [external, setExternal] = useState<ExternalPayload | null>(null)
   const [internal, setInternal] = useState<InternalPayload | null>(null)
   const [failed, setFailed] = useState(false)
-  const [ago, setAgo] = useState(0)
   const alive = useRef(true)
   const hasExternal = useRef(false)
 
@@ -64,7 +80,6 @@ export function HomelabStatus() {
           hasExternal.current = true
           setExternal(j)
           setFailed(false)
-          setAgo(0)
         } else if (!hasExternal.current) {
           setFailed(true)
         }
@@ -80,7 +95,7 @@ export function HomelabStatus() {
         if (!alive.current) return
         if (j?.total) setInternal(j)
       } catch {
-        // Internal is optional — fail silent
+        // Internal is optional - fail silent
       }
     }
 
@@ -89,13 +104,11 @@ export function HomelabStatus() {
 
     const pollExternal = setInterval(loadExternal, 45000)
     const pollInternal = setInterval(loadInternal, 90000)
-    const tick = setInterval(() => setAgo((a) => a + 1), 1000)
 
     return () => {
       alive.current = false
       clearInterval(pollExternal)
       clearInterval(pollInternal)
-      clearInterval(tick)
     }
   }, [])
 
@@ -112,9 +125,7 @@ export function HomelabStatus() {
             {external ? `${external.online}/${external.total} services online` : "Checking services"}
           </span>
         </div>
-        <span className="font-mono text-[11px] text-ink/40">
-          {external ? (ago < 2 ? "live" : `updated ${ago}s ago`) : "live"}
-        </span>
+        <UpdatedAgo key={external?.checkedAt ?? "init"} checkedAt={external?.checkedAt ?? null} />
       </div>
 
       <ul className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-1">
@@ -134,8 +145,8 @@ export function HomelabStatus() {
                 <span className="truncate text-[14px] text-ink/80">{name}</span>
               </span>
               {s ? (
-                <span className="font-mono text-[11px] text-ink/40 tabular-nums shrink-0">
-                  {s.status === "offline" ? "—" : `${s.ms}ms`}
+                <span className="font-mono text-[11px] text-ink/65 tabular-nums shrink-0">
+                  {s.status === "offline" ? "-" : `${s.ms}ms`}
                 </span>
               ) : (
                 <MsSkeleton />
@@ -144,7 +155,7 @@ export function HomelabStatus() {
           )
         })}
 
-        <li className="flex items-center justify-between gap-3 border-b border-ink/[0.08] py-2.5">
+        <li className="col-span-2 md:col-span-3 flex items-center justify-between gap-3 border-b border-ink/[0.08] py-2.5">
           <span className="flex items-center gap-2.5 min-w-0">
             {internal ? (
               <span
@@ -154,10 +165,10 @@ export function HomelabStatus() {
             ) : (
               <DotSkeleton />
             )}
-            <span className="truncate text-[14px] text-ink/80">Internal services</span>
+            <span className="whitespace-nowrap text-[14px] text-ink/80">Internal services</span>
           </span>
           {internal ? (
-            <span className="font-mono text-[11px] text-ink/40 tabular-nums shrink-0">
+            <span className="font-mono text-[11px] text-ink/65 tabular-nums shrink-0">
               {internal.online}/{internal.total} running
             </span>
           ) : (
@@ -166,8 +177,8 @@ export function HomelabStatus() {
         </li>
       </ul>
 
-      <p className="mt-6 font-sans text-[12px] text-ink/45 italic">
-        It&apos;s Kubernetes — if something&apos;s down, it&apos;ll probably heal itself before you finish refreshing.
+      <p className="mt-6 font-sans text-[12px] text-ink/65 italic">
+        It&apos;s Kubernetes - if something&apos;s down, it&apos;ll probably heal itself before you finish refreshing.
       </p>
     </div>
   )
