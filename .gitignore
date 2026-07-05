@@ -33,3 +33,4 @@ next-env.d.ts
 
 # Dev screenshots at repo root
 /*.png
+.dev-server.sh

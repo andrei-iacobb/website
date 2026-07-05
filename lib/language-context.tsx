@@ -2,9 +2,10 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
-  useState,
   useEffect,
+  useSyncExternalStore,
   type ReactNode,
 } from "react"
 import { translations, type Language } from "@/lib/translations"
@@ -15,30 +16,54 @@ type LanguageContextType = {
   t: (key: string) => string
 }
 
+const LANG_KEY = "lang"
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-function getStoredLanguage(): Language {
-  if (typeof window === "undefined") return "en"
-  const saved = localStorage.getItem("lang")
-  return saved === "en" || saved === "ro" ? saved : "en"
+function parseLanguage(value: string | null): Language {
+  return value === "en" || value === "ro" ? value : "en"
+}
+
+function readLanguage(): Language {
+  return parseLanguage(localStorage.getItem(LANG_KEY))
+}
+
+let listeners: Array<() => void> = []
+
+function subscribe(listener: () => void) {
+  listeners.push(listener)
+  return () => {
+    listeners = listeners.filter((l) => l !== listener)
+  }
+}
+
+function getSnapshot(): Language {
+  return readLanguage()
+}
+
+function getServerSnapshot(): Language {
+  return "en"
+}
+
+function setStoredLanguage(lang: Language) {
+  localStorage.setItem(LANG_KEY, lang)
+  listeners.forEach((l) => l())
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(getStoredLanguage)
+  const language = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
-  // Sync the HTML lang attribute with the current language on mount
+  const setLanguage = useCallback((lang: Language) => {
+    setStoredLanguage(lang)
+  }, [])
+
   useEffect(() => {
     document.documentElement.lang = language
   }, [language])
 
-  function setLanguage(lang: Language) {
-    setLanguageState(lang)
-    localStorage.setItem("lang", lang)
-  }
-
-  function t(key: string) {
-    return translations[language][key] ?? key
-  }
+  const t = useCallback(
+    (key: string) => translations[language][key] ?? key,
+    [language]
+  )
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

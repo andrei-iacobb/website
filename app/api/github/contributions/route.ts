@@ -3,7 +3,7 @@ import { cacheGet, cacheSet } from "@/lib/redis"
 
 export const revalidate = 3600
 
-const CACHE_KEY = "github:contributions:andrei-iacobb"
+const CACHE_KEY = "github:contributions:andrei-iacobb:v2"
 const CACHE_TTL = 3600 // 1 hour
 
 interface ContributionDay {
@@ -75,7 +75,7 @@ async function fetchFromGitHub(): Promise<ContributionPayload | null> {
     }
   }
 
-  // Public fallback — no auth required
+  // Public fallback - no auth required
   const res = await fetch(
     "https://github-contributions-api.jogruber.de/v4/andrei-iacobb?y=last",
     { next: { revalidate: 3600 } }
@@ -89,16 +89,53 @@ async function fetchFromGitHub(): Promise<ContributionPayload | null> {
   return { weeks, total }
 }
 
+// Forgejo activity from the homelab instance. Same merge rule as the
+// profile-card generator: per-day MAX of the two sources, so commits
+// mirrored between GitHub and Forgejo are not double-counted.
+async function fetchForgejoByDate(): Promise<Record<string, number>> {
+  const token = process.env.FORGEJO_TOKEN
+  if (!token) return {}
+  try {
+    const res = await fetch("https://git.iacob.co.uk/api/v1/users/andrei/heatmap", {
+      headers: { Authorization: `token ${token}` },
+      next: { revalidate: 3600 },
+    })
+    if (!res.ok) return {}
+    const data = (await res.json()) as { timestamp: number; contributions: number }[]
+    const byDate: Record<string, number> = {}
+    for (const e of data) {
+      const iso = new Date(e.timestamp * 1000).toISOString().slice(0, 10)
+      byDate[iso] = (byDate[iso] ?? 0) + e.contributions
+    }
+    return byDate
+  } catch {
+    return {}
+  }
+}
+
+function mergeMax(github: ContributionPayload, forgejo: Record<string, number>): ContributionPayload {
+  let total = 0
+  const weeks = github.weeks.map((w) => ({
+    contributionDays: w.contributionDays.map((d) => {
+      const count = Math.max(d.contributionCount, forgejo[d.date] ?? 0)
+      total += count
+      return { date: d.date, contributionCount: count }
+    }),
+  }))
+  return { weeks, total }
+}
+
 export async function GET() {
   try {
     const cached = await cacheGet<ContributionPayload>(CACHE_KEY)
     if (cached) return NextResponse.json(cached)
 
-    const fresh = await fetchFromGitHub()
-    if (!fresh) return NextResponse.json({ weeks: [], total: 0 })
+    const [github, forgejo] = await Promise.all([fetchFromGitHub(), fetchForgejoByDate()])
+    if (!github) return NextResponse.json({ weeks: [], total: 0 })
 
-    await cacheSet(CACHE_KEY, fresh, CACHE_TTL)
-    return NextResponse.json(fresh)
+    const merged = mergeMax(github, forgejo)
+    await cacheSet(CACHE_KEY, merged, CACHE_TTL)
+    return NextResponse.json(merged)
   } catch {
     return NextResponse.json({ weeks: [], total: 0 })
   }

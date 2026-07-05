@@ -1,6 +1,6 @@
 import type React from "react"
 import "@/app/globals.css"
-import { Bricolage_Grotesque, DM_Sans, Instrument_Serif } from "next/font/google"
+import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/language-context"
 import type { Metadata, Viewport } from "next"
@@ -17,14 +17,6 @@ const dmSans = DM_Sans({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-dm-sans",
-})
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-serif",
 })
 
 export const viewport: Viewport = {
@@ -65,13 +57,13 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     url: SITE_URL,
     title: 'Andrei Iacob - Software Developer',
-    description: 'Software developer and Computer Science student building full-stack web apps, self-hosted infrastructure, and open source tools.',
+    description: 'From fixing laptops to shipping SaaS - a Computer Science student who builds web apps and self-hosts the infrastructure behind them. Based in Bury St Edmunds, with a Kubernetes cluster running in the garage.',
     siteName: 'Andrei Iacob',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Andrei Iacob - Software Developer',
-    description: 'Software developer and Computer Science student building full-stack web apps, self-hosted infrastructure, and open source tools.',
+    description: 'From fixing laptops to shipping SaaS - a Computer Science student who builds web apps and self-hosts the infrastructure behind them. Based in Bury St Edmunds, with a Kubernetes cluster running in the garage.',
   },
   // After deploying, register the site in Google Search Console and paste the
   // verification token here (or use the DNS method) to claim the property.
@@ -140,7 +132,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" suppressHydrationWarning className="scroll-smooth">
+    <html lang="en-GB" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -168,11 +160,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
       </head>
 
-      <body className={`${bricolage.variable} ${dmSans.variable} ${instrumentSerif.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
+      <body className={`${bricolage.variable} ${dmSans.variable} font-sans antialiased`}>
+        <ThemeProvider attribute="class" forcedTheme="light" enableSystem={false} disableTransitionOnChange>
+          <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
