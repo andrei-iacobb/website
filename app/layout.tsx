@@ -141,6 +141,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
+        {/* Scroll-reveal sections are hidden by default (no first-paint flash);
+            with JS off there is no observer to reveal them, so show them. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
+
         <Script
           async
           src="/js/p.js"

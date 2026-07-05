@@ -3,6 +3,7 @@ import type { CSSProperties } from "react"
 import { ContributionGraph } from "@/components/contribution-graph"
 import { CopyEmail } from "@/components/copy-email"
 import { HomelabStatus } from "@/components/homelab-status"
+import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { SiteHeader } from "@/components/site-header"
 
 // ──────────────────────────────────────────────
@@ -72,6 +73,7 @@ export default function Page() {
     <div className="preview-shell min-h-[100svh] text-ink/90 antialiased">
       <a href="#work" className="preview-skip-link">Skip to work</a>
 
+      <RevealOnScroll />
       <SiteHeader />
 
       <main>
@@ -130,7 +132,7 @@ export default function Page() {
         </section>
 
         {/* ----- Selected work ----- */}
-        <section id="work" aria-labelledby="work-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
+        <section id="work" data-reveal aria-labelledby="work-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12 md:mb-16">
             <h2 id="work-label" className={h2Style}>Selected work</h2>
             <p className="text-[16px] text-ink/65 max-w-sm">A handful of what I&apos;ve shipped. Some paid, some open source, some just for me.</p>
@@ -165,7 +167,7 @@ export default function Page() {
         </section>
 
         {/* ----- What I do ----- */}
-        <section id="services" aria-labelledby="services-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
+        <section id="services" data-reveal aria-labelledby="services-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12 md:mb-16">
             <h2 id="services-label" className={h2Style}>What I do</h2>
             <p className="text-[16px] text-ink/65 max-w-sm">Three things, done properly. Often all three for the same client.</p>
@@ -181,7 +183,7 @@ export default function Page() {
         </section>
 
         {/* ----- Homelab ----- */}
-        <section id="homelab" aria-labelledby="homelab-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
+        <section id="homelab" data-reveal aria-labelledby="homelab-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="grid lg:grid-cols-[0.4fr_1fr] gap-10 lg:gap-20 mb-12 md:mb-16">
             <div>
               <p className={eyebrow}>The homelab</p>
@@ -212,12 +214,12 @@ export default function Page() {
         </section>
 
         {/* ----- Activity ----- */}
-        <div className="border-t border-ink/12">
+        <div data-reveal className="border-t border-ink/12">
           <ContributionGraph />
         </div>
 
         {/* ----- About ----- */}
-        <section id="about" aria-labelledby="about-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
+        <section id="about" data-reveal aria-labelledby="about-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="grid lg:grid-cols-[1fr_0.78fr] gap-12 lg:gap-20 items-start">
             <div className="max-w-[58ch]">
               <h2 id="about-label" className={`${eyebrow} mb-8`}>About</h2>
@@ -245,7 +247,7 @@ export default function Page() {
         </section>
 
         {/* ----- Contact ----- */}
-        <section id="contact" aria-labelledby="contact-label" className={`${SHELL} py-24 md:py-36 border-t border-ink/12 scroll-mt-24`}>
+        <section id="contact" data-reveal aria-labelledby="contact-label" className={`${SHELL} py-24 md:py-36 border-t border-ink/12 scroll-mt-24`}>
           <p className={`${eyebrow} mb-8`}>Contact</p>
           <h2 id="contact-label" className="font-display font-bold leading-[0.95] tracking-[-0.02em] text-ink text-[clamp(40px,6.5vw,96px)]">Let&apos;s build something.</h2>
           <p className="mt-10 max-w-xl text-[19px] leading-[1.6] text-ink/65">Got a project, or just want to talk shop? My inbox is open.</p>
