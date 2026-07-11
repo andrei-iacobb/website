@@ -92,16 +92,14 @@ export default function HomelabPage() {
               With sixty services on two physical machines, you have to care about resource
               limits - a memory leak in one container eventually becomes everyone&apos;s problem.
               Hardware fails, nodes drop, pods get rescheduled. The apps I build have to survive
-              that and reconnect gracefully. It is the cheapest production experience money can
-              buy.
+              that and reconnect gracefully.
             </p>
             <p>
               It also keeps the freelance work grounded. When I{" "}
               <Link href="/#services" className="editorial-link text-ink/85 hover:text-ink">
                 set up self-hosting for clients
               </Link>
-              , it is the same stack I have been running and repairing at home for years - not
-              something I read about last week.
+              , it is the same stack I run and repair at home.
             </p>
           </div>
 

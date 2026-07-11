@@ -90,8 +90,8 @@ export default function AboutPage() {
               <Link href="/homelab" className="editorial-link text-ink/85 hover:text-ink">
                 infrastructure I run myself
               </Link>
-              . Hosting my own work keeps me honest - when something breaks, there is no one else
-              to call.
+              . Hosting my own work means that when something breaks, there is no one else to
+              call.
             </p>
             <p>
               The freelance side comes in three flavours: custom apps, IT support for businesses -
