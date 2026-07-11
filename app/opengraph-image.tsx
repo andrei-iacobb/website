@@ -8,13 +8,14 @@ export const alt = "Andrei Iacob - Software Developer"
 
 export default async function OpengraphImage() {
   const f = (n: string) => readFile(join(process.cwd(), "app", "_fonts", n))
-  const [serif, serifItalic, mono] = await Promise.all([
+  const [serif, mono] = await Promise.all([
     f("InstrumentSerif-Regular.ttf"),
-    f("InstrumentSerif-Italic.ttf"),
     f("IBMPlexMono-Regular.ttf"),
   ])
 
-  const TEAL = "rgb(45, 212, 191)" // hsl(175 84% 55%) - the site's "Iacob" accent
+  const INK = "#1b1e24" // --ink - the site's near-black text color
+  const INK_MUTED = "rgba(27,30,36,0.65)" // matches text-ink/65 used across the page
+  const CLAY = "rgb(213, 70, 26)" // hsl(14 78% 47%) - the site's --accent (status dot, hovers)
 
   return new ImageResponse(
     (
@@ -25,85 +26,69 @@ export default async function OpengraphImage() {
           position: "relative",
           width: "100%",
           height: "100%",
-          backgroundColor: "#0a0a0a",
+          backgroundColor: "#f6f2e9",
           backgroundImage:
-            "radial-gradient(1000px circle at 6% -8%, rgba(17,197,182,0.32), rgba(17,197,182,0.07) 32%, transparent 58%), radial-gradient(820px circle at 104% 112%, rgba(45,212,191,0.13), transparent 56%)",
-          color: "#f4f7fa",
+            "radial-gradient(1000px circle at 8% -10%, #fcf9f3 0%, #f6f2e9 45%, #efe9dc 100%), radial-gradient(900px circle at 104% 112%, rgba(213,70,26,0.08), transparent 56%)",
+          color: INK,
           padding: 72,
           justifyContent: "space-between",
           overflow: "hidden",
         }}
       >
-        {/* Top - wordmark, left (mirrors nav) */}
+        {/* Eyebrow - mirrors the hero kicker (mono, uppercase, wide-tracked) */}
         <div
           style={{
             display: "flex",
             fontFamily: "IBM Plex Mono",
-            fontSize: 22,
-            letterSpacing: 1,
-            color: "rgba(244,247,250,0.6)",
+            fontSize: 40,
+            letterSpacing: 2,
+            color: INK_MUTED,
           }}
         >
-          andrei
-          <span style={{ color: "rgba(244,247,250,0.35)" }}>.</span>
-          iacob
+          SOFTWARE DEVELOPER - BURY ST EDMUNDS, UK
         </div>
 
-        {/* Middle - big name, right-aligned (hero masthead) */}
+        {/* Masthead - huge near-black name (closest available font to Bricolage Grotesque) */}
         <div
           style={{
             display: "flex",
-            justifyContent: "flex-end",
             fontFamily: "Instrument Serif",
-            fontSize: 150,
-            lineHeight: 0.92,
-            letterSpacing: -3,
+            fontSize: 172,
+            lineHeight: 0.95,
+            letterSpacing: -5,
+            color: INK,
           }}
         >
-          Andrei
-          <span
-            style={{
-              fontFamily: "Instrument Serif",
-              fontStyle: "italic",
-              color: TEAL,
-              marginLeft: 28,
-            }}
-          >
-            Iacob
-          </span>
+          Andrei Iacob
         </div>
 
-        {/* Bottom - tagline left, meta right */}
+        {/* Bottom - status dot + domain */}
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
+            alignItems: "center",
           }}
         >
           <div
             style={{
               display: "flex",
-              fontFamily: "Instrument Serif",
-              fontStyle: "italic",
-              fontSize: 38,
-              lineHeight: 1.25,
-              color: "rgba(244,247,250,0.72)",
-              maxWidth: 460,
+              width: 18,
+              height: 18,
+              marginRight: 16,
+              borderRadius: "50%",
+              backgroundColor: CLAY,
             }}
-          >
-            I build web apps and look after the servers they run on.
-          </div>
+          />
           <div
             style={{
               display: "flex",
               fontFamily: "IBM Plex Mono",
-              fontSize: 17,
-              letterSpacing: 1,
-              color: "rgba(244,247,250,0.45)",
+              fontSize: 40,
+              letterSpacing: 2,
+              color: INK_MUTED,
             }}
           >
-            BSc Computer Science
+            andrei.iacob.co.uk
           </div>
         </div>
       </div>
@@ -112,7 +97,6 @@ export default async function OpengraphImage() {
       ...size,
       fonts: [
         { name: "Instrument Serif", data: serif, style: "normal", weight: 400 },
-        { name: "Instrument Serif", data: serifItalic, style: "italic", weight: 400 },
         { name: "IBM Plex Mono", data: mono, style: "normal", weight: 400 },
       ],
     }

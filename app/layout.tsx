@@ -1,8 +1,6 @@
 import type React from "react"
 import "@/app/globals.css"
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
-import { LanguageProvider } from "@/lib/language-context"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import { SITE_URL } from "@/lib/constants"
@@ -103,9 +101,16 @@ const jsonLd = {
         addressRegion: "Suffolk",
         addressCountry: "GB",
       },
+      // affiliation, not alumniOf: still studying there.
+      affiliation: {
+        "@type": "CollegeOrUniversity",
+        name: "Anglia Ruskin University",
+      },
+      knowsLanguage: ["en-GB", "ro"],
       sameAs: [
         "https://github.com/andrei-iacobb",
         "https://linkedin.com/in/andreigiacob",
+        "https://git.iacob.co.uk/andrei",
       ],
     },
     {
@@ -132,15 +137,12 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" suppressHydrationWarning>
+    <html lang="en-GB">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
         {/* Scroll-reveal sections are hidden by default (no first-paint flash);
             with JS off there is no observer to reveal them, so show them. */}
         <noscript>
@@ -148,12 +150,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
 
         <Script
-          async
           src="/js/p.js"
           data-api="/api/p"
+          strategy="lazyOnload"
         />
 
-        <Script id="plausible-init" strategy="afterInteractive">
+        <Script id="plausible-init" strategy="lazyOnload">
           {`
             window.plausible = window.plausible || function() {
               (plausible.q = plausible.q || []).push(arguments)
@@ -167,9 +169,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body className={`${bricolage.variable} ${dmSans.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" forcedTheme="light" enableSystem={false} disableTransitionOnChange>
-          <LanguageProvider>{children}</LanguageProvider>
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   )

@@ -21,9 +21,11 @@ const nextConfig = {
   },
   // Enable compression
   compress: true,
-  // Optimize build performance
+  // Inline the page's CSS into the HTML instead of a render-blocking
+  // stylesheet request (Next built-in; replaces the critters-based
+  // optimizeCss, which was not eliminating the blocking chunk).
   experimental: {
-    optimizeCss: true,
+    inlineCss: true,
   },
   turbopack: {},
   // Disable X-Powered-By header to avoid exposing server technology

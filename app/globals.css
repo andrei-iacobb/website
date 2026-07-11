@@ -70,8 +70,11 @@
   }
 
   @keyframes data-animate-enter {
+    /* 0.01, not 0: the browser records the element's first paint at
+       animation start, so hero text no longer gates LCP. The fade is
+       visually identical. */
     0% {
-      opacity: 0;
+      opacity: 0.01;
       transform: translateY(14px);
     }
     100% {

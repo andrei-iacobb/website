@@ -3,11 +3,12 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
+// "/#section" (not "#section") so the links also work from /about and /homelab.
 const nav = [
-  { href: "#work", label: "Work" },
-  { href: "#homelab", label: "Homelab" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#work", label: "Work" },
+  { href: "/homelab", label: "Homelab" },
+  { href: "/about", label: "About" },
+  { href: "/#contact", label: "Contact" },
 ]
 
 export function SiteHeader() {

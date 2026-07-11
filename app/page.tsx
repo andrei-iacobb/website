@@ -1,9 +1,11 @@
 import Image from "next/image"
 import type { CSSProperties } from "react"
 import { ContributionGraph } from "@/components/contribution-graph"
+import { LanguageProvider } from "@/lib/language-context"
 import { CopyEmail } from "@/components/copy-email"
 import { HomelabStatus } from "@/components/homelab-status"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import RepoStrip from "@/components/repo-strip"
 import { SiteHeader } from "@/components/site-header"
 
 // ──────────────────────────────────────────────
@@ -22,8 +24,9 @@ const projects = [
 
 const nav = [
   { href: "#work", label: "Work" },
-  { href: "#homelab", label: "Homelab" },
-  { href: "#about", label: "About" },
+  { href: "#services", label: "Services" },
+  { href: "/homelab", label: "Homelab" },
+  { href: "/about", label: "About" },
   { href: "#contact", label: "Contact" },
 ]
 
@@ -164,6 +167,7 @@ export default function Page() {
             Everything else lives on{" "}
             <a href="https://github.com/andrei-iacobb" target="_blank" rel="noopener noreferrer" className="editorial-link text-ink/80 hover:text-ink">github.com/andrei-iacobb</a>.
           </p>
+          <RepoStrip />
         </section>
 
         {/* ----- What I do ----- */}
@@ -197,6 +201,9 @@ export default function Page() {
             <div className="max-w-[44ch]">
               <h2 id="homelab-label" className={h2Style}>I host what I build.</h2>
               <p className="mt-6 text-[18px] leading-[1.6] text-ink/70">Most of what I build, I also host. There is a Kubernetes cluster running on Proxmox across a couple of HP ProLiants in my garage, running the services I rely on day to day and giving me somewhere real to break things.</p>
+              <p className="mt-5 text-[15px]">
+                <a href="/homelab" className="editorial-link text-ink/70 hover:text-ink">More about the homelab</a>
+              </p>
             </div>
           </div>
 
@@ -214,8 +221,12 @@ export default function Page() {
         </section>
 
         {/* ----- Activity ----- */}
+        {/* LanguageProvider lives here (not in the root layout) - the
+            contribution graph is its only consumer. */}
         <div data-reveal className="border-t border-ink/12">
-          <ContributionGraph />
+          <LanguageProvider>
+            <ContributionGraph />
+          </LanguageProvider>
         </div>
 
         {/* ----- About ----- */}
@@ -237,6 +248,9 @@ export default function Page() {
                 </ul>
               </div>
               <p className="mt-10 font-mono text-[13px] text-ink/65">Next.js · TypeScript · Postgres · Kubernetes · Docker · Linux</p>
+              <p className="mt-6 text-[15px]">
+                <a href="/about" className="editorial-link text-ink/70 hover:text-ink">More about me</a>
+              </p>
             </div>
             <div className="relative group">
               <div className="aspect-[4/5] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
