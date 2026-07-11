@@ -15,7 +15,7 @@ const projects = [
   { year: "2026", name: "Fleet Management System", kind: "Fleet management platform with live vehicle tracking and driver apps.", role: "Commissioned", url: null, locked: true },
   { year: "2026", name: "Swish", kind: "Swipe-first fashion discovery app for iOS, in TestFlight.", role: "In development", url: null, locked: true },
   { year: "2025", name: "NeatPlan", kind: "Cleaning-ops SaaS with live tracking and scheduling.", role: "Commissioned", url: "https://github.com/andrei-iacobb/neatplan" },
-  { year: "Since 2023", name: "HomeOps", kind: "A Kubernetes homelab running 60-odd self-hosted services on bare-metal ProLiants.", role: "Personal infra", url: "https://github.com/andrei-iacobb/homeops" },
+  { year: "Since 2023", name: "HomeOps", kind: "A Kubernetes homelab running 60-odd self-hosted services on Proxmox and HP ProLiants.", role: "Personal infra", url: "https://github.com/andrei-iacobb/homeops" },
   { year: "2024", name: "StaffClock", kind: "Facial-recognition time tracking and payroll exports.", role: "Commissioned", url: "https://github.com/andrei-iacobb/staffclock" },
   { year: "2025", name: "Informate", kind: "AI news summariser built with Java and OpenAI.", role: "Built solo", url: "https://github.com/andrei-iacobb/informate" },
 ]
@@ -42,12 +42,12 @@ const contactSocials = [
 const services = [
   { t: "App development", d: "Custom web apps and internal tools, built with Next.js and Postgres and shipped quickly." },
   { t: "IT support", d: "Hands-on support for businesses: hardware, networks and the day-to-day that keeps teams running." },
-  { t: "Self-hosting & infra", d: "Kubernetes, Docker and bare-metal setups. I host what I build, and can host yours." },
+  { t: "Self-hosting & infra", d: "Kubernetes, Proxmox and Docker setups. I host what I build, and can host yours." },
 ]
 
 const homelabStats = [
   ["60+", "self-hosted services"],
-  ["Bare-metal", "Kubernetes cluster"],
+  ["Proxmox", "Kubernetes cluster"],
   ["2x", "HP ProLiant G9 servers"],
   ["2023", "running since"],
 ]
@@ -196,7 +196,7 @@ export default function Page() {
             </div>
             <div className="max-w-[44ch]">
               <h2 id="homelab-label" className={h2Style}>I host what I build.</h2>
-              <p className="mt-6 text-[18px] leading-[1.6] text-ink/70">Most of what I build, I also host. There is a Kubernetes cluster on bare-metal HP ProLiants in my garage, running the services I rely on day to day and giving me somewhere real to break things.</p>
+              <p className="mt-6 text-[18px] leading-[1.6] text-ink/70">Most of what I build, I also host. There is a Kubernetes cluster running on Proxmox across a couple of HP ProLiants in my garage, running the services I rely on day to day and giving me somewhere real to break things.</p>
             </div>
           </div>
 
