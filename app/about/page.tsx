@@ -9,12 +9,25 @@ export const metadata: Metadata = {
   description:
     "Andrei Iacob is a software developer in Bury St Edmunds, Suffolk - building web apps with Next.js and Postgres, supporting business IT, and studying Computer Science at Anglia Ruskin.",
   alternates: { canonical: "/about" },
+  // Full objects, not fragments: Next replaces (not merges) openGraph and
+  // twitter per route, and a page-level openGraph also suppresses the
+  // file-convention og:image - so both must be complete here.
   openGraph: {
     type: "website",
     title: "About Andrei Iacob",
     description:
       "Software developer in Bury St Edmunds - web apps, business IT support, and self-hosted infrastructure.",
     url: `${SITE_URL}/about`,
+    siteName: "Andrei Iacob",
+    locale: "en_GB",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Andrei Iacob - Software Developer" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Andrei Iacob",
+    description:
+      "Software developer in Bury St Edmunds - web apps, business IT support, and self-hosted infrastructure.",
+    images: ["/twitter-image"],
   },
 }
 

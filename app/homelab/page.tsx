@@ -9,12 +9,25 @@ export const metadata: Metadata = {
   description:
     "Andrei Iacob's homelab: a Kubernetes cluster on Proxmox across two HP ProLiant G9s, running 60+ self-hosted services - including this site - since 2023.",
   alternates: { canonical: "/homelab" },
+  // Full objects, not fragments: Next replaces (not merges) openGraph and
+  // twitter per route, and a page-level openGraph also suppresses the
+  // file-convention og:image - so both must be complete here.
   openGraph: {
     type: "website",
     title: "The homelab · Andrei Iacob",
     description:
       "A Kubernetes cluster on Proxmox in a garage in Suffolk, running 60+ self-hosted services - including this site.",
     url: `${SITE_URL}/homelab`,
+    siteName: "Andrei Iacob",
+    locale: "en_GB",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Andrei Iacob - Software Developer" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The homelab · Andrei Iacob",
+    description:
+      "A Kubernetes cluster on Proxmox in a garage in Suffolk, running 60+ self-hosted services - including this site.",
+    images: ["/twitter-image"],
   },
 }
 
