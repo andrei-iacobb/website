@@ -45,17 +45,21 @@ async function fetchRepos(): Promise<Repo[] | null> {
 }
 
 export default async function RepoStrip() {
+  let recent: Repo[]
   try {
     const repos = await fetchRepos()
     if (!repos) return null
 
-    const recent = repos
+    recent = repos
       .filter((repo) => !repo.fork && !repo.archived)
       .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
       .slice(0, 4)
-    if (recent.length === 0) return null
+  } catch {
+    return null
+  }
+  if (recent.length === 0) return null
 
-    return (
+  return (
       <div className="mt-10 flex flex-wrap items-baseline gap-x-8 gap-y-2">
         <span id="repo-strip-label" className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-ink/65">
           Recently pushed
@@ -78,8 +82,5 @@ export default async function RepoStrip() {
           ))}
         </ul>
       </div>
-    )
-  } catch {
-    return null
-  }
+  )
 }
