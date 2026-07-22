@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     default: "Andrei Iacob - Software Developer",
     template: "%s · Andrei Iacob"
   },
-  description: "Andrei Iacob (Andrei Gabriel Iacob) - software developer and Computer Science student building full-stack web apps, self-hosted infrastructure, and open source tools.",
+  description: "Andrei Iacob (Andrei Gabriel Iacob) - software developer building full-stack web apps, self-hosted infrastructure, and open-source tools.",
   keywords: ["Andrei Iacob", "Andrei Gabriel Iacob", "Iacob", "Andrei", "Computer Science", "Software Developer", "React", "Next.js", "TypeScript", "Kubernetes", "Bury St Edmunds"],
   authors: [{ name: "Andrei Iacob", url: SITE_URL }],
   creator: "Andrei Iacob",
