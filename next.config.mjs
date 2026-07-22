@@ -17,6 +17,7 @@ const nextConfig = {
   // Enable image optimization for faster loading
   images: {
     formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 2678400,
     minimumCacheTTL: 31536000, // 1 year
   },
   // Enable compression

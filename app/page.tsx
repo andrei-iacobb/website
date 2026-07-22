@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/lib/language-context"
 import { CopyEmail } from "@/components/copy-email"
 import { HomelabStatus } from "@/components/homelab-status"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { PhotoSketch } from "@/components/photo-sketch"
 import RepoStrip from "@/components/repo-strip"
 import { SiteHeader } from "@/components/site-header"
 
@@ -119,14 +120,15 @@ export default function Page() {
               </p>
             </div>
             <div data-animate style={stagger(2)} className="hidden lg:block">
-              <div className="aspect-[4/5] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
+                <PhotoSketch variant="beach" />
                 <Image
                   src="/og-panel.jpg"
                   alt="Andrei Iacob on a beach at dusk"
                   width={920}
                   height={1250}
                   sizes="(max-width: 1024px) 0px, 460px"
-                  className="w-full h-full object-cover"
+                  className="relative w-full h-full object-cover"
                   priority
                 />
               </div>
@@ -192,8 +194,9 @@ export default function Page() {
             <div>
               <p className={eyebrow}>The homelab</p>
               <div className="relative group mt-8 hidden lg:block">
-                <div className="aspect-[4/3] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
-                  <Image src="/IMG_3905.jpeg" alt="Andrei's desk setup: dual monitors, MacBook and a custom RTX PC" width={1200} height={900} sizes="(max-width: 1024px) 0px, 340px" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
+                  <PhotoSketch variant="desk" />
+                  <Image src="/IMG_3905.jpeg" alt="Andrei's desk setup: dual monitors, MacBook and a custom RTX PC" width={1200} height={900} sizes="(max-width: 1024px) 0px, 340px" className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 </div>
                 <p className="mt-3 font-sans text-[12px] text-ink/65">Where the building happens.</p>
               </div>
@@ -253,8 +256,9 @@ export default function Page() {
               </p>
             </div>
             <div className="relative group">
-              <div className="aspect-[4/5] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
-                <Image src="/IMG_3962.jpeg" alt="Andrei Iacob" width={640} height={800} sizes="(max-width: 1024px) 90vw, 460px" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+              <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
+                <PhotoSketch variant="portrait" />
+                <Image src="/IMG_3962.jpeg" alt="Andrei Iacob" width={640} height={800} sizes="(max-width: 1024px) 90vw, 460px" className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
               </div>
             </div>
           </div>

@@ -306,6 +306,22 @@ h3 {
   text-wrap: balance;
 }
 
+/* Stickman photo placeholders - gentle breathe while the photo streams in.
+   The global reduced-motion block below flattens this animation too. */
+.sketch-pulse {
+  animation: sketch-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes sketch-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
