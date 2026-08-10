@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import type { CSSProperties } from "react"
 import { ContributionGraph } from "@/components/contribution-graph"
 import { LanguageProvider } from "@/lib/language-context"
@@ -8,6 +9,8 @@ import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { PhotoSketch } from "@/components/photo-sketch"
 import RepoStrip from "@/components/repo-strip"
 import { SiteHeader } from "@/components/site-header"
+import { CurrentYear } from "@/components/current-year"
+import { getContributions } from "@/lib/github"
 
 // ──────────────────────────────────────────────
 // Content
@@ -63,7 +66,7 @@ const now = [
 ]
 
 const eyebrow = "font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-ink/65"
-const SHELL = "mx-auto w-full max-w-[82rem] px-6 md:px-10 lg:px-16"
+const SHELL = "mx-auto w-full max-w-328 px-6 md:px-10 lg:px-16"
 const h2Style = "font-display font-bold text-[clamp(36px,5.5vw,76px)] tracking-[-0.02em] leading-[0.95] text-ink"
 
 const stagger = (n: number) => ({ "--stagger": n } as CSSProperties)
@@ -72,9 +75,11 @@ const stagger = (n: number) => ({ "--stagger": n } as CSSProperties)
 // Page
 // ──────────────────────────────────────────────
 
-export default function Page() {
+export default async function Page() {
+  const contributionData = await getContributions()
+
   return (
-    <div className="preview-shell min-h-[100svh] text-ink/90 antialiased">
+    <div className="preview-shell min-h-svh text-ink/90 antialiased">
       <a href="#work" className="preview-skip-link">Skip to work</a>
 
       <RevealOnScroll />
@@ -89,6 +94,7 @@ export default function Page() {
                 Software Developer - Bury St Edmunds, UK
               </p>
               <h1
+                data-testid="page-heading-home"
                 data-animate
                 style={stagger(1)}
                 className="font-display font-bold leading-[0.95] tracking-[-0.03em] text-ink text-[clamp(52px,8vw,120px)]"
@@ -120,7 +126,7 @@ export default function Page() {
               </p>
             </div>
             <div data-animate style={stagger(2)} className="hidden lg:block">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
+              <div className="relative aspect-4/5 overflow-hidden rounded-xl bg-ink/4 ring-1 ring-ink/10">
                 <PhotoSketch variant="beach" />
                 <Image
                   src="/og-panel.jpg"
@@ -194,7 +200,7 @@ export default function Page() {
             <div>
               <p className={eyebrow}>The homelab</p>
               <div className="relative group mt-8 hidden lg:block">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
+                <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-ink/4 ring-1 ring-ink/10">
                   <PhotoSketch variant="desk" />
                   <Image src="/IMG_3905.jpeg" alt="Andrei's desk setup: dual monitors, MacBook and a custom RTX PC" width={1200} height={900} sizes="(max-width: 1024px) 0px, 340px" className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 </div>
@@ -205,7 +211,7 @@ export default function Page() {
               <h2 id="homelab-label" className={h2Style}>I host what I build.</h2>
               <p className="mt-6 text-[18px] leading-[1.6] text-ink/70">Most of what I build, I also host. There is a Kubernetes cluster running on Proxmox across a couple of HP ProLiants in my garage, running the services I rely on day to day and giving me somewhere real to break things.</p>
               <p className="mt-5 text-[15px]">
-                <a href="/homelab" className="editorial-link text-ink/70 hover:text-ink">More about the homelab</a>
+                <Link href="/homelab" className="editorial-link text-ink/70 hover:text-ink">More about the homelab</Link>
               </p>
             </div>
           </div>
@@ -228,7 +234,7 @@ export default function Page() {
             contribution graph is its only consumer. */}
         <div data-reveal className="border-t border-ink/12">
           <LanguageProvider>
-            <ContributionGraph />
+            <ContributionGraph initialData={contributionData} />
           </LanguageProvider>
         </div>
 
@@ -246,17 +252,17 @@ export default function Page() {
                 <p className={`${eyebrow} mb-5`}>Now</p>
                 <ul className="space-y-3">
                   {now.map((item) => (
-                    <li key={item} className="text-[16px] leading-[1.5] text-ink/70">{item}</li>
+                    <li key={item} className="text-[16px] leading-normal text-ink/70">{item}</li>
                   ))}
                 </ul>
               </div>
               <p className="mt-10 font-mono text-[13px] text-ink/65">Next.js · TypeScript · Postgres · Kubernetes · Docker · Linux</p>
               <p className="mt-6 text-[15px]">
-                <a href="/about" className="editorial-link text-ink/70 hover:text-ink">More about me</a>
+                <Link href="/about" className="editorial-link text-ink/70 hover:text-ink">More about me</Link>
               </p>
             </div>
             <div className="relative group">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-ink/[0.04] ring-1 ring-ink/10">
+              <div className="relative aspect-4/5 overflow-hidden rounded-xl bg-ink/4 ring-1 ring-ink/10">
                 <PhotoSketch variant="portrait" />
                 <Image src="/IMG_3962.jpeg" alt="Andrei Iacob" width={640} height={800} sizes="(max-width: 1024px) 90vw, 460px" className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
               </div>
@@ -282,10 +288,10 @@ export default function Page() {
 
       <footer className="border-t border-ink/12">
         <div className={`${SHELL} py-10 flex flex-wrap items-center justify-between gap-x-10 gap-y-4`}>
-          <p className="text-[13px] text-ink/65">&copy; {new Date().getFullYear()} Andrei Iacob</p>
+          <p className="text-[13px] text-ink/65">&copy; <CurrentYear /> Andrei Iacob</p>
           <nav aria-label="Footer" className="flex flex-wrap gap-x-7 gap-y-2">
             {nav.map((n) => (
-              <a key={n.href} href={n.href} className="text-[13px] text-ink/65 hover:text-ink transition-colors">{n.label}</a>
+              <Link key={n.href} href={n.href} className="text-[13px] text-ink/65 hover:text-ink transition-colors">{n.label}</Link>
             ))}
           </nav>
           <p className="inline-flex items-center gap-2 text-[13px] text-ink/65">

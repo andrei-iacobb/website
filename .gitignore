@@ -30,6 +30,8 @@ next-env.d.ts
 
 # Playwright
 .playwright-mcp/
+/playwright-report/
+/test-results/
 
 # Dev screenshots at repo root
 /*.png

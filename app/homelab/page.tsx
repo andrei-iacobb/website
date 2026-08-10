@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import type { CSSProperties } from "react"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
+import { CurrentYear } from "@/components/current-year"
 import { SITE_URL } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -49,13 +50,13 @@ const stats = [
 ]
 
 const eyebrow = "font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-ink/65"
-const SHELL = "mx-auto w-full max-w-[82rem] px-6 md:px-10 lg:px-16"
+const SHELL = "mx-auto w-full max-w-328 px-6 md:px-10 lg:px-16"
 
 const stagger = (n: number) => ({ "--stagger": n } as CSSProperties)
 
 export default function HomelabPage() {
   return (
-    <div className="preview-shell min-h-[100svh] text-ink/90 antialiased">
+    <div className="preview-shell min-h-svh text-ink/90 antialiased">
       <a href="#main" className="preview-skip-link">Skip to content</a>
 
       <SiteHeader />
@@ -71,6 +72,7 @@ export default function HomelabPage() {
             The homelab
           </p>
           <h1
+            data-testid="page-heading-homelab"
             data-animate
             style={stagger(1)}
             className="font-display font-bold leading-[0.95] tracking-[-0.03em] text-ink text-[clamp(40px,6.5vw,96px)] max-w-4xl"
@@ -138,7 +140,7 @@ export default function HomelabPage() {
 
       <footer className="border-t border-ink/12">
         <div className={`${SHELL} py-10 flex flex-wrap items-center justify-between gap-x-10 gap-y-4`}>
-          <p className="text-[13px] text-ink/65">&copy; {new Date().getFullYear()} Andrei Iacob</p>
+          <p className="text-[13px] text-ink/65">&copy; <CurrentYear /> Andrei Iacob</p>
           <Link href="/" className="text-[13px] text-ink/65 hover:text-ink transition-colors">andrei.iacob.co.uk</Link>
         </div>
       </footer>

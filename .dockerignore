@@ -19,6 +19,7 @@ out
 .git
 .gitignore
 .gitattributes
+.github
 
 # IDE files
 .idea
@@ -52,6 +53,11 @@ docs/
 jest.config.js
 cypress.json
 cypress/
+tests/
+playwright.config.*
+playwright-report/
+test-results/
+.playwright-mcp/
 
 # Logs
 logs
@@ -84,4 +90,3 @@ scripts/
 # Temporary folders
 tmp/
 temp/
-

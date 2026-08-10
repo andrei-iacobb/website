@@ -1,9 +1,8 @@
-import { NextResponse } from "next/server"
+import { connection, NextResponse } from "next/server"
 import { INTERNAL_SERVICE_URLS } from "@/lib/homelab-internal"
 import { checkService, mapLimit } from "@/lib/homelab-check"
 import { cacheGet, cacheSet } from "@/lib/redis"
 
-export const dynamic = "force-dynamic"
 export const maxDuration = 60
 
 const CACHE_KEY = "homelab:internal:v1"
@@ -42,6 +41,9 @@ async function probeAll(): Promise<InternalPayload> {
 }
 
 export async function GET() {
+  // Health probes must never run during a build or speculative prefetch.
+  await connection()
+
   try {
     const cached = await cacheGet<InternalPayload>(CACHE_KEY)
     if (cached) return NextResponse.json(cached)

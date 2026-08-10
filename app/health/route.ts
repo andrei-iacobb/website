@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { connection, NextResponse } from 'next/server'
 
 const CACHE_HEADERS = {
   'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -6,6 +6,8 @@ const CACHE_HEADERS = {
 }
 
 export async function GET() {
+  await connection()
+
   try {
     return NextResponse.json(
       { status: 'healthy' },
@@ -17,4 +19,4 @@ export async function GET() {
       { status: 503, headers: CACHE_HEADERS },
     )
   }
-} 
+}

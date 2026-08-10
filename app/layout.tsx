@@ -3,6 +3,7 @@ import "@/app/globals.css"
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
+import { OfflineStatus } from "@/components/offline-status"
 import { SITE_URL } from "@/lib/constants"
 
 const bricolage = Bricolage_Grotesque({
@@ -169,6 +170,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body className={`${bricolage.variable} ${dmSans.variable} font-sans antialiased`}>
+        <OfflineStatus />
         {children}
       </body>
     </html>

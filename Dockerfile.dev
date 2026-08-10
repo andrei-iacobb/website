@@ -1,18 +1,17 @@
-FROM node:22-alpine
+# syntax=docker/dockerfile:1.7
+
+ARG NODE_VERSION=24.19.0
+FROM node:${NODE_VERSION}-alpine
+
+ENV PNPM_HOME=/pnpm
+ENV PATH=${PNPM_HOME}:${PATH}
+RUN apk add --no-cache libc6-compat && corepack enable
 
 WORKDIR /app
-
-# Copy package files
-COPY package.json package-lock.json* ./
-
-# Install dependencies
-RUN npm install
-
-# Copy source code
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm install --frozen-lockfile
 COPY . .
 
-# Expose development port
 EXPOSE 3000
-
-# Start development server
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "dev", "--hostname", "0.0.0.0"]

@@ -1,25 +1,29 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 const EMAIL = "andrei@iacob.co.uk"
 
 export function CopyEmail() {
   const [copied, setCopied] = useState(false)
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [copiedUntil, setCopiedUntil] = useState<number | null>(null)
 
   useEffect(() => {
-    return () => {
-      if (timer.current) clearTimeout(timer.current)
-    }
-  }, [])
+    if (copiedUntil === null) return
+
+    const timer = setTimeout(() => {
+      setCopied(false)
+      setCopiedUntil(null)
+    }, Math.max(0, copiedUntil - Date.now()))
+
+    return () => clearTimeout(timer)
+  }, [copiedUntil])
 
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(EMAIL)
       setCopied(true)
-      if (timer.current) clearTimeout(timer.current)
-      timer.current = setTimeout(() => setCopied(false), 1600)
+      setCopiedUntil(Date.now() + 1600)
     } catch {
       window.location.href = `mailto:${EMAIL}`
     }

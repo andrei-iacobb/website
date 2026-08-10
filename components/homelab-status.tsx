@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useOffline } from "next/offline"
 import { EXTERNAL_SERVICE_NAMES } from "@/lib/homelab-external"
 
 type Status = "online" | "degraded" | "offline"
@@ -48,11 +49,21 @@ function MsSkeleton() {
 function UpdatedAgo({ checkedAt }: { checkedAt: string | null }) {
   const [ago, setAgo] = useState(0)
 
-  // Remounted via `key={checkedAt}` on each poll, so `ago` starts fresh at 0.
   useEffect(() => {
-    const tick = setInterval(() => setAgo((a) => a + 1), 1000)
-    return () => clearInterval(tick)
-  }, [])
+    if (!checkedAt) return
+
+    const update = () => {
+      const checkedAtMs = Date.parse(checkedAt)
+      setAgo(Math.max(0, Math.floor((Date.now() - checkedAtMs) / 1000)))
+    }
+    const initial = setTimeout(update, 0)
+    const tick = setInterval(update, 1000)
+
+    return () => {
+      clearTimeout(initial)
+      clearInterval(tick)
+    }
+  }, [checkedAt])
 
   return (
     <span className="font-mono text-[11px] text-ink/65">
@@ -62,6 +73,7 @@ function UpdatedAgo({ checkedAt }: { checkedAt: string | null }) {
 }
 
 export function HomelabStatus() {
+  const isOffline = useOffline()
   const [external, setExternal] = useState<ExternalPayload | null>(null)
   const [internal, setInternal] = useState<InternalPayload | null>(null)
   const [failed, setFailed] = useState(false)
@@ -69,6 +81,8 @@ export function HomelabStatus() {
   const hasExternal = useRef(false)
 
   useEffect(() => {
+    if (isOffline) return
+
     alive.current = true
 
     const loadExternal = async () => {
@@ -110,14 +124,14 @@ export function HomelabStatus() {
       clearInterval(pollExternal)
       clearInterval(pollInternal)
     }
-  }, [])
+  }, [isOffline])
 
   if (failed && !external) return null
 
   const byName = new Map(external?.services.map((s) => [s.name, s]) ?? [])
 
   return (
-    <div className="rounded-2xl border border-ink/12 bg-ink/[0.015] p-6 md:p-8">
+    <div className="rounded-2xl border border-ink/12 bg-ink/1.5 p-6 md:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div className="flex items-center gap-2.5">
           <span className="status-dot" aria-hidden />
@@ -134,7 +148,7 @@ export function HomelabStatus() {
           return (
             <li
               key={name}
-              className="flex items-center justify-between gap-3 border-b border-ink/[0.08] py-2.5"
+              className="flex items-center justify-between gap-3 border-b border-ink/8 py-2.5"
             >
               <span className="flex items-center gap-2.5 min-w-0">
                 {s ? (
@@ -155,7 +169,7 @@ export function HomelabStatus() {
           )
         })}
 
-        <li className="col-span-2 md:col-span-3 flex items-center justify-between gap-3 border-b border-ink/[0.08] py-2.5">
+        <li className="col-span-2 md:col-span-3 flex items-center justify-between gap-3 border-b border-ink/8 py-2.5">
           <span className="flex items-center gap-2.5 min-w-0">
             {internal ? (
               <span
