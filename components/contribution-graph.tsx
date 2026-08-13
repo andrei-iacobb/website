@@ -3,15 +3,7 @@
 import { useEffect, useState } from "react"
 import { useLanguage } from "@/lib/language-context"
 import { CountUp } from "@/components/reveal"
-
-interface ContributionDay {
-  contributionCount: number
-  date: string
-}
-
-interface Week {
-  contributionDays: ContributionDay[]
-}
+import type { ContributionPayload, ContributionWeek } from "@/lib/github"
 
 const MONTH_LABELS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 const MONTH_LABELS_RO = ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Noi", "Dec"]
@@ -25,7 +17,7 @@ function getLevel(count: number): 0 | 1 | 2 | 3 | 4 {
 }
 
 const levelClass: Record<0 | 1 | 2 | 3 | 4, string> = {
-  0: "bg-ink/[0.06]",
+  0: "bg-ink/6",
   1: "bg-ink/20",
   2: "bg-ink/40",
   3: "bg-ink/60",
@@ -34,22 +26,25 @@ const levelClass: Record<0 | 1 | 2 | 3 | 4, string> = {
 
 const FORGEJO = "https://git.iacob.co.uk/andrei"
 
-export function ContributionGraph() {
+export function ContributionGraph({ initialData }: { initialData: ContributionPayload }) {
   const { t, language } = useLanguage()
-  const [weeks, setWeeks] = useState<Week[]>([])
-  const [total, setTotal] = useState<number | null>(null)
+  const [fallbackData, setFallbackData] = useState<ContributionPayload | null>(null)
+  const data = initialData.weeks.length ? initialData : (fallbackData ?? initialData)
+  const weeks: ContributionWeek[] = data.weeks
+  const total = data.total
 
   useEffect(() => {
+    if (initialData.weeks.length) return
+
     fetch("/api/github/contributions")
       .then((r) => r.json())
       .then((data) => {
         if (data.weeks?.length) {
-          setWeeks(data.weeks)
-          setTotal(data.total)
+          setFallbackData(data)
         }
       })
       .catch(() => {})
-  }, [])
+  }, [initialData.weeks.length])
 
   if (!weeks.length) return null
 
@@ -60,7 +55,7 @@ export function ContributionGraph() {
   weeks.forEach((week, i) => {
     const firstDay = week.contributionDays[0]
     if (!firstDay) return
-    const month = new Date(firstDay.date).getMonth()
+    const month = new Date(`${firstDay.date}T00:00:00Z`).getUTCMonth()
     if (month !== lastMonth) {
       monthPositions.push({ label: monthLabels[month], col: i })
       lastMonth = month
@@ -70,7 +65,7 @@ export function ContributionGraph() {
   const cols = weeks.length
 
   return (
-    <section className="mx-auto w-full max-w-[82rem] px-6 md:px-10 lg:px-16 py-20 md:py-28">
+    <section className="mx-auto w-full max-w-328 px-6 md:px-10 lg:px-16 py-20 md:py-28">
       <div className="flex flex-wrap items-end justify-between gap-3 mb-3">
         <h2 className="font-display text-[clamp(24px,3vw,36px)] font-bold tracking-[-0.02em] leading-[0.95]">
           {t("contributions.heading")}
@@ -99,7 +94,7 @@ export function ContributionGraph() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="View Andrei's git activity on Forgejo"
-        className="block rounded-lg -m-3 p-3 transition-colors hover:bg-ink/[0.03]"
+        className="block rounded-lg -m-3 p-3 transition-colors hover:bg-ink/3"
       >
         <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0 pb-2">
           <div className="min-w-[680px]">

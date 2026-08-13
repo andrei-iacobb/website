@@ -1,18 +1,19 @@
-version: '3.8'
-
 services:
   portfolio:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: andrei-portfolio
-    restart: always
     ports:
       - "3001:3000"
+    environment:
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: "1"
     volumes:
       - .:/app
-      - /app/node_modules
-      - /app/.next
-    environment:
-      - NODE_ENV=development
-    command: pnpm dev
+      - portfolio_node_modules:/app/node_modules
+      - portfolio_next:/app/.next
+    init: true
+
+volumes:
+  portfolio_node_modules:
+  portfolio_next:

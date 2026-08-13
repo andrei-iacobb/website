@@ -37,10 +37,11 @@ export function SiteHeader() {
     <header className="preview-header" data-scrolled={scrolled}>
       <nav
         aria-label="Primary"
-        className="mx-auto w-full max-w-[82rem] px-6 md:px-10 lg:px-16 py-5 flex items-center justify-between"
+        className="mx-auto w-full max-w-328 px-6 md:px-10 lg:px-16 py-5 flex items-center justify-between"
       >
         <Link
           href="/"
+          data-testid="nav-home"
           className="inline-flex items-center min-h-[44px] font-display text-[15px] sm:text-[17px] font-bold tracking-tight text-ink hover:opacity-70 transition-opacity"
         >
           Andrei Iacob
@@ -48,12 +49,13 @@ export function SiteHeader() {
         <ul className="flex items-center gap-4 sm:gap-6 md:gap-8">
           {nav.map((n) => (
             <li key={n.href}>
-              <a
+              <Link
                 href={n.href}
+                data-testid={`nav-${n.label.toLowerCase()}`}
                 className="editorial-link inline-flex items-center min-h-[44px] text-[13px] sm:text-[14px] text-ink/65 hover:text-ink transition-colors"
               >
                 {n.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

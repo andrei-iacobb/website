@@ -1,5 +1,27 @@
+const isDevelopment = process.env.NODE_ENV === 'development'
+
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "frame-src 'none'",
+  "object-src 'none'",
+  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}`,
+  "script-src-attr 'none'",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self'",
+  "img-src 'self' data:",
+  "manifest-src 'self'",
+  `connect-src 'self'${isDevelopment ? ' ws: wss:' : ''}`,
+].join('; ')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  allowedDevOrigins: ['127.0.0.1'],
+  cacheComponents: true,
+  partialPrefetching: true,
+  reactCompiler: true,
   async rewrites() {
     return [
       {
@@ -17,7 +39,6 @@ const nextConfig = {
   // Enable image optimization for faster loading
   images: {
     formats: ['image/webp', 'image/avif'],
-    minimumCacheTTL: 2678400,
     minimumCacheTTL: 31536000, // 1 year
   },
   // Enable compression
@@ -26,7 +47,11 @@ const nextConfig = {
   // stylesheet request (Next built-in; replaces the critters-based
   // optimizeCss, which was not eliminating the blocking chunk).
   experimental: {
+    exposeTestingApiInProductionBuild:
+      process.env.EXPOSE_TESTING_API === '1',
     inlineCss: true,
+    turbopackRustReactCompiler: true,
+    useOffline: true,
   },
   turbopack: {},
   // Disable X-Powered-By header to avoid exposing server technology
@@ -49,7 +74,7 @@ const nextConfig = {
           },
           {
             key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin',
+            value: 'strict-origin-when-cross-origin',
           },
           {
             key: 'X-DNS-Prefetch-Control',
@@ -61,20 +86,19 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'",
+            value: contentSecurityPolicy,
           },
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()',
+            value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
           },
-        ],
-      },
-      {
-        source: '/static/(.*)',
-        headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin',
+          },
+          {
+            key: 'X-Permitted-Cross-Domain-Policies',
+            value: 'none',
           },
         ],
       },

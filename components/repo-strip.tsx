@@ -1,9 +1,5 @@
-type Repo = {
-  name: string
-  pushed_at: string
-  fork: boolean
-  archived: boolean
-}
+import { cacheLife, cacheTag } from "next/cache"
+import { getRepositories } from "@/lib/github"
 
 function getRelativeTime(dateString: string): string {
   const seconds = Math.floor(
@@ -26,37 +22,16 @@ function getRelativeTime(dateString: string): string {
   return "just now"
 }
 
-async function fetchRepos(): Promise<Repo[] | null> {
-  const headers: HeadersInit = {
-    Accept: "application/vnd.github+json",
-  }
-  if (process.env.GITHUB_TOKEN) {
-    headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`
-  }
-
-  const res = await fetch(
-    "https://api.github.com/users/andrei-iacobb/repos?sort=updated&per_page=30",
-    { headers, next: { revalidate: 3600 } }
-  )
-
-  if (!res.ok) return null
-
-  return (await res.json()) as Repo[]
-}
-
 export default async function RepoStrip() {
-  let recent: Repo[]
-  try {
-    const repos = await fetchRepos()
-    if (!repos) return null
+  "use cache"
+  cacheLife("hours")
+  cacheTag("github-repositories")
 
-    recent = repos
-      .filter((repo) => !repo.fork && !repo.archived)
-      .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
-      .slice(0, 4)
-  } catch {
-    return null
-  }
+  const recent = (await getRepositories())
+    .filter((repo) => !repo.fork && !repo.archived)
+    .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
+    .slice(0, 4)
+
   if (recent.length === 0) return null
 
   return (

@@ -1,65 +1,51 @@
-# ================================
-# STAGE 1: Dependencies
-# ================================
-FROM node:22-alpine AS deps
-RUN apk add --no-cache libc6-compat
-RUN corepack enable
+# syntax=docker/dockerfile:1.7
 
+ARG NODE_VERSION=24.19.0
+
+FROM node:${NODE_VERSION}-alpine AS base
+ENV PNPM_HOME=/pnpm
+ENV PATH=${PNPM_HOME}:${PATH}
+RUN apk add --no-cache libc6-compat && corepack enable
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+FROM base AS dependencies
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm fetch --frozen-lockfile
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm install --offline --frozen-lockfile
 
-RUN pnpm install --frozen-lockfile
-
-# ================================
-# STAGE 2: Builder
-# ================================
-FROM node:22-alpine AS builder
-RUN corepack enable
-WORKDIR /app
-
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/package.json ./package.json
-COPY --from=deps /app/pnpm-lock.yaml ./pnpm-lock.yaml
-
+FROM base AS builder
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+COPY --from=dependencies /app/node_modules ./node_modules
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY . .
+RUN pnpm build
 
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+FROM node:${NODE_VERSION}-alpine AS runner
+RUN apk add --no-cache dumb-init \
+    && addgroup --system --gid 1001 nodejs \
+    && adduser --system --uid 1001 --ingroup nodejs nextjs
 
-RUN pnpm run build
-
-# ================================
-# STAGE 3: Runner (Production)
-# ================================
-FROM node:22-alpine AS runner
 WORKDIR /app
-
-RUN apk add --no-cache dumb-init
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
 
-COPY --from=builder /app/public ./public
-
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+RUN mkdir -p .next/cache/images \
+    && chown -R nextjs:nodejs .next
 
 USER nextjs
-
 EXPOSE 3000
+STOPSIGNAL SIGTERM
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "require('http').get('http://127.0.0.1:3000/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
 
 ENTRYPOINT ["dumb-init", "--"]
-
 CMD ["node", "server.js"]
