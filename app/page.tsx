@@ -9,10 +9,6 @@ import { PhotoSketch } from "@/components/photo-sketch"
 import RepoStrip from "@/components/repo-strip"
 import { SiteHeader } from "@/components/site-header"
 
-// ──────────────────────────────────────────────
-// Content
-// ──────────────────────────────────────────────
-
 const projects = [
   { year: "2026", name: "Visitor Management", kind: "Multi-site check-in with Android kiosks and contractor validation.", role: "Commissioned", url: null, locked: true },
   { year: "2026", name: "Fleet Management System", kind: "Fleet management platform with live vehicle tracking and driver apps.", role: "Commissioned", url: null, locked: true },
@@ -68,10 +64,6 @@ const h2Style = "font-display font-bold text-[clamp(36px,5.5vw,76px)] tracking-[
 
 const stagger = (n: number) => ({ "--stagger": n } as CSSProperties)
 
-// ──────────────────────────────────────────────
-// Page
-// ──────────────────────────────────────────────
-
 export default function Page() {
   return (
     <div className="preview-shell min-h-[100svh] text-ink/90 antialiased">
@@ -81,7 +73,6 @@ export default function Page() {
       <SiteHeader />
 
       <main>
-        {/* ----- Hero ----- */}
         <section aria-label="Intro" className={`${SHELL} pt-16 md:pt-24 pb-16 md:pb-24`}>
           <div className="grid lg:grid-cols-[1.4fr_0.9fr] gap-12 lg:gap-20 items-end">
             <div>
@@ -136,7 +127,6 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ----- Selected work ----- */}
         <section id="work" data-reveal aria-labelledby="work-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12 md:mb-16">
             <h2 id="work-label" className={h2Style}>Selected work</h2>
@@ -172,7 +162,6 @@ export default function Page() {
           <RepoStrip />
         </section>
 
-        {/* ----- What I do ----- */}
         <section id="services" data-reveal aria-labelledby="services-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12 md:mb-16">
             <h2 id="services-label" className={h2Style}>What I do</h2>
@@ -188,7 +177,6 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ----- Homelab ----- */}
         <section id="homelab" data-reveal aria-labelledby="homelab-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="grid lg:grid-cols-[0.4fr_1fr] gap-10 lg:gap-20 mb-12 md:mb-16">
             <div>
@@ -223,7 +211,6 @@ export default function Page() {
           </dl>
         </section>
 
-        {/* ----- Activity ----- */}
         {/* LanguageProvider lives here (not in the root layout) - the
             contribution graph is its only consumer. */}
         <div data-reveal className="border-t border-ink/12">
@@ -232,7 +219,6 @@ export default function Page() {
           </LanguageProvider>
         </div>
 
-        {/* ----- About ----- */}
         <section id="about" data-reveal aria-labelledby="about-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
           <div className="grid lg:grid-cols-[1fr_0.78fr] gap-12 lg:gap-20 items-start">
             <div className="max-w-[58ch]">
@@ -264,7 +250,6 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ----- Contact ----- */}
         <section id="contact" data-reveal aria-labelledby="contact-label" className={`${SHELL} py-24 md:py-36 border-t border-ink/12 scroll-mt-24`}>
           <p className={`${eyebrow} mb-8`}>Contact</p>
           <h2 id="contact-label" className="font-display font-bold leading-[0.95] tracking-[-0.02em] text-ink text-[clamp(40px,6.5vw,96px)]">Let&apos;s build something.</h2>
