@@ -62,7 +62,6 @@ export default async function OpengraphImage() {
           Andrei Iacob
         </div>
 
-        {/* Bottom - status dot + domain */}
         <div
           style={{
             display: "flex",

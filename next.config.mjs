@@ -41,7 +41,6 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 31536000, // 1 year
   },
-  // Enable compression
   compress: true,
   // Inline the page's CSS into the HTML instead of a render-blocking
   // stylesheet request (Next built-in; replaces the critters-based
