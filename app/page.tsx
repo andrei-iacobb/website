@@ -1,4 +1,5 @@
 import Image from "next/image"
+import type { Metadata } from "next"
 import Link from "next/link"
 import type { CSSProperties } from "react"
 import { ContributionGraph } from "@/components/contribution-graph"
@@ -9,8 +10,30 @@ import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { PhotoSketch } from "@/components/photo-sketch"
 import RepoStrip from "@/components/repo-strip"
 import { SiteHeader } from "@/components/site-header"
+import { PROFILE_IMAGE, SITE_URL } from "@/lib/constants"
 import { CurrentYear } from "@/components/current-year"
 import { getContributions } from "@/lib/github"
+
+// Define images on the page: file-convention metadata overrides layout defaults.
+export const metadata: Metadata = {
+  openGraph: {
+    type: "profile",
+    firstName: "Andrei",
+    lastName: "Iacob",
+    locale: "en_GB",
+    url: SITE_URL,
+    title: "Andrei Iacob - Software Developer",
+    description: "Software developer in Bury St Edmunds, Suffolk. Web apps, business IT services, self-hosted infrastructure, and open-source projects.",
+    siteName: "Andrei Iacob",
+    images: [PROFILE_IMAGE],
+  },
+  twitter: {
+    card: "summary",
+    title: "Andrei Iacob - Software Developer",
+    description: "Software developer in Bury St Edmunds, Suffolk. Web apps, business IT services, self-hosted infrastructure, and open-source projects.",
+    images: [PROFILE_IMAGE],
+  },
+}
 
 const projects = [
   { year: "2026", name: "Visitor Management", kind: "Multi-site check-in with Android kiosks and contractor validation.", role: "Commissioned", url: null, locked: true },
