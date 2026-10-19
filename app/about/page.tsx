@@ -3,16 +3,16 @@ import type { CSSProperties } from "react"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { CurrentYear } from "@/components/current-year"
-import { SITE_URL } from "@/lib/constants"
+import { PROFILE_IMAGE, SITE_URL } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "Andrei Iacob is a software developer in Bury St Edmunds, Suffolk - building web apps with Next.js and Postgres, supporting business IT, and studying Computer Science at Anglia Ruskin.",
   alternates: { canonical: "/about" },
-  // Full objects, not fragments: Next replaces (not merges) openGraph and
-  // twitter per route, and a page-level openGraph also suppresses the
-  // file-convention og:image - so both must be complete here.
+  // Keep the homepage as the search landing page for Andrei's name.
+  robots: { index: false, follow: true },
+  // Next replaces these objects per route, so keep the portrait explicit.
   openGraph: {
     type: "website",
     title: "About Andrei Iacob",
@@ -21,14 +21,14 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/about`,
     siteName: "Andrei Iacob",
     locale: "en_GB",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Andrei Iacob - Software Developer" }],
+    images: [PROFILE_IMAGE],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "About Andrei Iacob",
     description:
       "Software developer in Bury St Edmunds - web apps, business IT support, and self-hosted infrastructure.",
-    images: ["/twitter-image"],
+    images: [PROFILE_IMAGE],
   },
 }
 
@@ -38,6 +38,7 @@ const jsonLd = {
   "@id": `${SITE_URL}/about#aboutpage`,
   url: `${SITE_URL}/about`,
   name: "About Andrei Iacob",
+  primaryImageOfPage: PROFILE_IMAGE.url,
   isPartOf: { "@id": `${SITE_URL}/#website` },
   mainEntity: { "@id": `${SITE_URL}/#person` },
 }

@@ -4,7 +4,7 @@ import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import { OfflineStatus } from "@/components/offline-status"
-import { SITE_URL } from "@/lib/constants"
+import { PROFILE_IMAGE, SITE_URL } from "@/lib/constants"
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin", "latin-ext"],
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     default: "Andrei Iacob - Software Developer",
     template: "%s · Andrei Iacob"
   },
-  description: "Andrei Iacob (Andrei Gabriel Iacob) - software developer building full-stack web apps, self-hosted infrastructure, and open-source tools.",
+  description: "Andrei Iacob is a software developer in Bury St Edmunds, Suffolk. Explore my web apps, business IT services, self-hosted infrastructure, and open-source projects.",
   keywords: ["Andrei Iacob", "Andrei Gabriel Iacob", "Iacob", "Andrei", "Computer Science", "Software Developer", "React", "Next.js", "TypeScript", "Kubernetes", "Bury St Edmunds"],
   authors: [{ name: "Andrei Iacob", url: SITE_URL }],
   creator: "Andrei Iacob",
@@ -49,21 +49,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  openGraph: {
-    type: 'profile',
-    firstName: 'Andrei',
-    lastName: 'Iacob',
-    locale: 'en_GB',
-    url: SITE_URL,
-    title: 'Andrei Iacob - Software Developer',
-    description: 'From fixing laptops to shipping SaaS - a Computer Science student who builds web apps and self-hosts the infrastructure behind them. Based in Bury St Edmunds, with a Kubernetes cluster running in the garage.',
-    siteName: 'Andrei Iacob',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Andrei Iacob - Software Developer',
-    description: 'From fixing laptops to shipping SaaS - a Computer Science student who builds web apps and self-hosts the infrastructure behind them. Based in Bury St Edmunds, with a Kubernetes cluster running in the garage.',
-  },
   // After deploying, register the site in Google Search Console and paste the
   // verification token here (or use the DNS method) to claim the property.
   // verification: { google: 'PASTE_TOKEN_HERE' },
@@ -81,7 +66,7 @@ const jsonLd = {
       additionalName: "Gabriel",
       familyName: "Iacob",
       url: SITE_URL,
-      image: `${SITE_URL}/opengraph-image`,
+      image: PROFILE_IMAGE.url,
       jobTitle: "Software Developer",
       description:
         "Software developer and Computer Science student building full-stack web apps, self-hosted infrastructure, and open source tools.",
@@ -129,6 +114,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#profilepage`,
       url: SITE_URL,
       name: "Andrei Iacob - Software Developer",
+      primaryImageOfPage: PROFILE_IMAGE.url,
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#person` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
