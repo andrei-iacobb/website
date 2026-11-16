@@ -38,7 +38,9 @@ const nextConfig = {
   output: 'standalone',
   // Enable image optimization for faster loading
   images: {
-    formats: ['image/webp', 'image/avif'],
+    formats: ['image/avif', 'image/webp'],
+    imageSizes: [32, 48, 64, 96, 128, 256, 320, 384, 432, 484],
+    qualities: [75],
     minimumCacheTTL: 31536000, // 1 year
   },
   compress: true,

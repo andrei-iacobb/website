@@ -1,7 +1,4 @@
-"use client"
-
 import Link from "next/link"
-import { useEffect, useState } from "react"
 
 // "/#section" (not "#section") so the links also work from /about and /homelab.
 const nav = [
@@ -12,29 +9,8 @@ const nav = [
 ]
 
 export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-
-    // Keep anchor navigation working but drop the #hash from the URL
-    // afterwards, so a refresh reloads the page at the top instead of
-    // jumping back to the last section.
-    const onHashChange = () => {
-      history.replaceState(null, "", window.location.pathname + window.location.search)
-    }
-    window.addEventListener("hashchange", onHashChange)
-
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      window.removeEventListener("hashchange", onHashChange)
-    }
-  }, [])
-
   return (
-    <header className="preview-header" data-scrolled={scrolled}>
+    <header className="preview-header">
       <nav
         aria-label="Primary"
         className="mx-auto w-full max-w-328 px-6 md:px-10 lg:px-16 py-5 flex items-center justify-between"

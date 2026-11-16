@@ -50,7 +50,7 @@ export default async function RepoStrip() {
               >
                 {repo.name}
               </a>
-              <span className="font-mono text-[13px] text-ink/45 tabular-nums">
+              <span className="font-mono text-[13px] text-ink/65 tabular-nums">
                 {getRelativeTime(repo.pushed_at)}
               </span>
             </li>

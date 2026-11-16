@@ -1,12 +1,11 @@
-import Image from "next/image"
 import type { Metadata } from "next"
 import Link from "next/link"
 import type { CSSProperties } from "react"
 import { ContributionGraph } from "@/components/contribution-graph"
-import { LanguageProvider } from "@/lib/language-context"
 import { CopyEmail } from "@/components/copy-email"
-import { HomelabStatus } from "@/components/homelab-status"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { DeferredHomelabStatus } from "@/components/deferred-homelab-status"
+import { HomelabStatusFallback } from "@/components/homelab-status-fallback"
+import { OptimizedImage } from "@/components/optimized-image"
 import { PhotoSketch } from "@/components/photo-sketch"
 import RepoStrip from "@/components/repo-strip"
 import { SiteHeader } from "@/components/site-header"
@@ -97,7 +96,6 @@ export default async function Page() {
     <div className="preview-shell min-h-svh text-ink/90 antialiased">
       <a href="#work" className="preview-skip-link">Skip to work</a>
 
-      <RevealOnScroll />
       <SiteHeader />
 
       <main>
@@ -142,14 +140,16 @@ export default async function Page() {
             <div data-animate style={stagger(2)} className="hidden lg:block">
               <div className="relative aspect-4/5 overflow-hidden rounded-xl bg-ink/4 ring-1 ring-ink/10">
                 <PhotoSketch variant="beach" />
-                <Image
+                <OptimizedImage
                   src="/og-panel.jpg"
                   alt="Andrei Iacob on a beach at dusk"
                   width={920}
-                  height={1250}
-                  sizes="(max-width: 1024px) 0px, 460px"
+                  height={1271}
+                  sizes="(max-width: 1023px) 0px, (max-width: 1312px) calc((100vw - 208px) * 0.3913), 432px"
                   className="relative w-full h-full object-cover"
-                  priority
+                  loading="eager"
+                  fetchPriority="high"
+                  quality={75}
                 />
               </div>
             </div>
@@ -170,7 +170,7 @@ export default async function Page() {
                     <div className="flex items-center gap-3">
                       <span className="archive-title font-display text-[24px] md:text-[30px] font-semibold text-ink tracking-[-0.01em] leading-none">{p.name}</span>
                       {p.locked && <span className="font-sans text-[10px] uppercase tracking-[0.14em] text-ink/65 border border-ink/20 rounded-full px-2.5 py-0.5">Private</span>}
-                      {p.url && <span aria-hidden className="text-ink/30 text-[18px] opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">↗</span>}
+                      {p.url && <span aria-hidden className="text-ink/30 text-[18px] opacity-0 -translate-x-1 transition-[opacity,translate] duration-300 group-hover:opacity-100 group-hover:translate-x-0">↗</span>}
                     </div>
                     <p className="mt-2.5 text-[15px] md:text-[16px] leading-relaxed text-ink/65 max-w-[52ch]">{p.kind}</p>
                   </div>
@@ -213,7 +213,7 @@ export default async function Page() {
               <div className="relative group mt-8 hidden lg:block">
                 <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-ink/4 ring-1 ring-ink/10">
                   <PhotoSketch variant="desk" />
-                  <Image src="/IMG_3905.jpeg" alt="Andrei's desk setup: dual monitors, MacBook and a custom RTX PC" width={1200} height={900} sizes="(max-width: 1024px) 0px, 340px" className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                  <OptimizedImage src="/IMG_3905.jpeg" alt="Andrei's desk setup: dual monitors, MacBook and a custom RTX PC" width={1600} height={1200} sizes="(max-width: 1023px) 0px, (max-width: 1312px) calc((100vw - 208px) * 0.2857), 315px" quality={75} className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 </div>
                 <p className="mt-3 font-sans text-[12px] text-ink/65">Where the building happens.</p>
               </div>
@@ -228,7 +228,7 @@ export default async function Page() {
           </div>
 
           {/* Live service status, health-checked server-side */}
-          <HomelabStatus />
+          <DeferredHomelabStatus fallback={<HomelabStatusFallback />} />
 
           <dl className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-8 border-t border-ink/15 pt-8">
             {homelabStats.map(([n, label]) => (
@@ -240,12 +240,8 @@ export default async function Page() {
           </dl>
         </section>
 
-        {/* LanguageProvider lives here (not in the root layout) - the
-            contribution graph is its only consumer. */}
         <div data-reveal className="border-t border-ink/12">
-          <LanguageProvider>
-            <ContributionGraph initialData={contributionData} />
-          </LanguageProvider>
+          <ContributionGraph data={contributionData} />
         </div>
 
         <section id="about" data-reveal aria-labelledby="about-label" className={`${SHELL} py-20 md:py-28 border-t border-ink/12 scroll-mt-24`}>
@@ -273,7 +269,7 @@ export default async function Page() {
             <div className="relative group">
               <div className="relative aspect-4/5 overflow-hidden rounded-xl bg-ink/4 ring-1 ring-ink/10">
                 <PhotoSketch variant="portrait" />
-                <Image src="/IMG_3962.jpeg" alt="Andrei Iacob" width={640} height={800} sizes="(max-width: 1024px) 90vw, 460px" className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                <OptimizedImage src="/IMG_3962.jpeg" alt="Andrei Iacob" width={1656} height={2208} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(100vw - 80px), (max-width: 1312px) calc((100vw - 208px) * 0.4382), 484px" quality={75} className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
               </div>
             </div>
           </div>

@@ -13,11 +13,10 @@ const stroke = {
   strokeLinejoin: "round",
 } as const
 
-const scenes: Record<Variant, { viewBox: string; label: string; art: React.ReactNode }> = {
+const scenes: Record<Variant, { viewBox: string; art: React.ReactNode }> = {
   // Me on a beach at dusk, apparently
   beach: {
     viewBox: "0 0 100 125",
-    label: "stickman enjoying a sunset while the real photo loads",
     art: (
       <g {...stroke}>
         {/* sun, clocking off */}
@@ -35,7 +34,6 @@ const scenes: Record<Variant, { viewBox: string; label: string; art: React.React
   // Where the building happens (allegedly)
   desk: {
     viewBox: "0 0 100 75",
-    label: "stickman hard at work while the real photo loads",
     art: (
       <g {...stroke}>
         {/* desk + monitor */}
@@ -54,7 +52,6 @@ const scenes: Record<Variant, { viewBox: string; label: string; art: React.React
   // Professional portrait, sort of
   portrait: {
     viewBox: "0 0 100 125",
-    label: "stickman posing while the real photo loads",
     art: (
       <g {...stroke}>
         <circle cx={50} cy={38} r={9} />
@@ -76,8 +73,7 @@ export function PhotoSketch({ variant }: { variant: Variant }) {
       viewBox={scene.viewBox}
       preserveAspectRatio="xMidYMid meet"
       className="sketch-pulse pointer-events-none absolute inset-0 h-full w-full p-[12%] text-ink/25"
-      role="img"
-      aria-label={scene.label}
+      aria-hidden="true"
     >
       {scene.art}
     </svg>
