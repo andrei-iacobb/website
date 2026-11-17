@@ -82,6 +82,7 @@ certbot/
 # Deployment scripts
 deploy.sh
 scripts/
+!scripts/build-images.mjs
 
 # Cache directories
 .cache/
@@ -90,3 +91,6 @@ scripts/
 # Temporary folders
 tmp/
 temp/
+
+# Pre-encoded images are generated during the image build
+public/_img/
