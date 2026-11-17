@@ -36,3 +36,6 @@ next-env.d.ts
 # Dev screenshots at repo root
 /*.png
 .dev-server.sh
+
+# pre-encoded images (scripts/build-images.mjs)
+/public/_img/

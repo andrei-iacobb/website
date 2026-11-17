@@ -63,6 +63,11 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // File names carry a content hash, so these never change in place.
+        source: '/_img/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
         source: '/(.*)',
         headers: [
           {

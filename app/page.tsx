@@ -149,7 +149,6 @@ export default async function Page() {
                   className="relative w-full h-full object-cover"
                   loading="eager"
                   fetchPriority="high"
-                  quality={75}
                 />
               </div>
             </div>
@@ -213,7 +212,7 @@ export default async function Page() {
               <div className="relative group mt-8 hidden lg:block">
                 <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-ink/4 ring-1 ring-ink/10">
                   <PhotoSketch variant="desk" />
-                  <OptimizedImage src="/IMG_3905.jpeg" alt="Andrei's desk setup: dual monitors, MacBook and a custom RTX PC" width={1600} height={1200} sizes="(max-width: 1023px) 0px, (max-width: 1312px) calc((100vw - 208px) * 0.2857), 315px" quality={75} className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                  <OptimizedImage src="/IMG_3905.jpeg" alt="Andrei's desk setup: dual monitors, MacBook and a custom RTX PC" width={1600} height={1200} sizes="(max-width: 1023px) 0px, (max-width: 1312px) calc((100vw - 208px) * 0.2857), 315px" className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 </div>
                 <p className="mt-3 font-sans text-[12px] text-ink/65">Where the building happens.</p>
               </div>
@@ -269,7 +268,7 @@ export default async function Page() {
             <div className="relative group">
               <div className="relative aspect-4/5 overflow-hidden rounded-xl bg-ink/4 ring-1 ring-ink/10">
                 <PhotoSketch variant="portrait" />
-                <OptimizedImage src="/IMG_3962.jpeg" alt="Andrei Iacob" width={1656} height={2208} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(100vw - 80px), (max-width: 1312px) calc((100vw - 208px) * 0.4382), 484px" quality={75} className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                <OptimizedImage src="/IMG_3962.jpeg" alt="Andrei Iacob" width={1656} height={2208} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(100vw - 80px), (max-width: 1312px) calc((100vw - 208px) * 0.4382), 484px" className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
               </div>
             </div>
           </div>

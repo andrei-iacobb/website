@@ -1,0 +1,23 @@
+{
+  "/IMG_3905.jpeg": {
+    "width": 1600,
+    "height": 1200,
+    "avif": "/_img/IMG_3905-9b2b89ff42-320.avif 320w, /_img/IMG_3905-9b2b89ff42-480.avif 480w, /_img/IMG_3905-9b2b89ff42-640.avif 640w, /_img/IMG_3905-9b2b89ff42-828.avif 828w, /_img/IMG_3905-9b2b89ff42-1080.avif 1080w, /_img/IMG_3905-9b2b89ff42-1320.avif 1320w, /_img/IMG_3905-9b2b89ff42-1600.avif 1600w",
+    "webp": "/_img/IMG_3905-9b2b89ff42-320.webp 320w, /_img/IMG_3905-9b2b89ff42-480.webp 480w, /_img/IMG_3905-9b2b89ff42-640.webp 640w, /_img/IMG_3905-9b2b89ff42-828.webp 828w, /_img/IMG_3905-9b2b89ff42-1080.webp 1080w, /_img/IMG_3905-9b2b89ff42-1320.webp 1320w, /_img/IMG_3905-9b2b89ff42-1600.webp 1600w",
+    "fallback": "/_img/IMG_3905-9b2b89ff42-1600.webp"
+  },
+  "/IMG_3962.jpeg": {
+    "width": 1656,
+    "height": 2208,
+    "avif": "/_img/IMG_3962-3e3ec9321d-320.avif 320w, /_img/IMG_3962-3e3ec9321d-480.avif 480w, /_img/IMG_3962-3e3ec9321d-640.avif 640w, /_img/IMG_3962-3e3ec9321d-828.avif 828w, /_img/IMG_3962-3e3ec9321d-1080.avif 1080w, /_img/IMG_3962-3e3ec9321d-1320.avif 1320w, /_img/IMG_3962-3e3ec9321d-1656.avif 1656w",
+    "webp": "/_img/IMG_3962-3e3ec9321d-320.webp 320w, /_img/IMG_3962-3e3ec9321d-480.webp 480w, /_img/IMG_3962-3e3ec9321d-640.webp 640w, /_img/IMG_3962-3e3ec9321d-828.webp 828w, /_img/IMG_3962-3e3ec9321d-1080.webp 1080w, /_img/IMG_3962-3e3ec9321d-1320.webp 1320w, /_img/IMG_3962-3e3ec9321d-1656.webp 1656w",
+    "fallback": "/_img/IMG_3962-3e3ec9321d-1656.webp"
+  },
+  "/og-panel.jpg": {
+    "width": 920,
+    "height": 1271,
+    "avif": "/_img/og-panel-689d650c34-320.avif 320w, /_img/og-panel-689d650c34-480.avif 480w, /_img/og-panel-689d650c34-640.avif 640w, /_img/og-panel-689d650c34-828.avif 828w, /_img/og-panel-689d650c34-920.avif 920w",
+    "webp": "/_img/og-panel-689d650c34-320.webp 320w, /_img/og-panel-689d650c34-480.webp 480w, /_img/og-panel-689d650c34-640.webp 640w, /_img/og-panel-689d650c34-828.webp 828w, /_img/og-panel-689d650c34-920.webp 920w",
+    "fallback": "/_img/og-panel-689d650c34-920.webp"
+  }
+}
