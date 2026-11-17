@@ -13,6 +13,11 @@ const ENCODERS = {
   avif: (image) => image.avif({ quality: 55, effort: 4 }),
   webp: (image) => image.webp({ quality: 75, effort: 5 }),
 };
+const ENCODER_FINGERPRINT = JSON.stringify({
+  v: 1,
+  vips: sharp.versions.vips,
+  encoders: Object.values(ENCODERS).map(String),
+});
 const SOURCE_PATTERN = /["'`](\/(?:[\w.-]+\/)*[\w.-]+\.(?:jpe?g|png))["'`]/gi;
 const OUTPUT_PREFIX = "/_img";
 
@@ -56,7 +61,12 @@ async function encode({ src, bytes }, written) {
   const rotated = (meta.orientation ?? 1) >= 5;
   const width = rotated ? meta.height : meta.width;
   const height = rotated ? meta.width : meta.height;
-  const hash = createHash("sha256").update(bytes).digest("hex").slice(0, 10);
+  // Settings and libvips version are hashed too, so a changed encoder never reuses an immutable URL.
+  const hash = createHash("sha256")
+    .update(bytes)
+    .update(ENCODER_FINGERPRINT)
+    .digest("hex")
+    .slice(0, 10);
   const base = path.basename(src).replace(/\.[^.]+$/, "");
   const widths = [...new Set([...WIDTHS.filter((w) => w < width), Math.min(width, WIDTHS.at(-1))])];
 
