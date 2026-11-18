@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1.7
 
-ARG NODE_VERSION=24.19.0
+ARG NODE_VERSION=24.22.1
+ARG NODE_DIGEST=sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
 
-FROM node:${NODE_VERSION}-alpine AS base
+FROM node:${NODE_VERSION}-alpine@${NODE_DIGEST} AS base
 ENV PNPM_HOME=/pnpm
 ENV PATH=${PNPM_HOME}:${PATH}
 RUN apk add --no-cache libc6-compat && corepack enable
@@ -23,7 +24,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY . .
 RUN pnpm build
 
-FROM node:${NODE_VERSION}-alpine AS runner
+FROM node:${NODE_VERSION}-alpine@${NODE_DIGEST} AS runner
 RUN apk add --no-cache dumb-init \
     && addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 --ingroup nodejs nextjs

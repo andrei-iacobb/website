@@ -128,7 +128,7 @@ export default function AboutPage() {
           <dl className="mt-14 max-w-2xl border-t border-ink/15">
             {facts.map(([k, v]) => (
               <div key={k} className="grid grid-cols-[120px_1fr] gap-x-6 py-4 border-b border-ink/15">
-                <dt className="font-mono text-[13px] text-ink/45">{k}</dt>
+                <dt className="font-mono text-[13px] text-ink/65">{k}</dt>
                 <dd className="text-[15px] text-ink/80">{v}</dd>
               </div>
             ))}

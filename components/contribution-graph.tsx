@@ -1,9 +1,5 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { useLanguage } from "@/lib/language-context"
-import { CountUp } from "@/components/reveal"
 import type { ContributionPayload, ContributionWeek } from "@/lib/github"
+import { translations } from "@/lib/translations"
 
 const MONTH_LABELS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 const MONTH_LABELS_RO = ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Noi", "Dec"]
@@ -26,38 +22,28 @@ const levelClass: Record<0 | 1 | 2 | 3 | 4, string> = {
 
 const FORGEJO = "https://git.iacob.co.uk/andrei"
 
-export function ContributionGraph({ initialData }: { initialData: ContributionPayload }) {
-  const { t, language } = useLanguage()
-  const [fallbackData, setFallbackData] = useState<ContributionPayload | null>(null)
-  const data = initialData.weeks.length ? initialData : (fallbackData ?? initialData)
+function LocalizedText({ en, ro }: { en: string; ro: string }) {
+  return <span data-lang-en={en} data-lang-ro={ro}>{en}</span>
+}
+
+export function ContributionGraph({ data }: { data: ContributionPayload }) {
   const weeks: ContributionWeek[] = data.weeks
   const total = data.total
 
-  useEffect(() => {
-    if (initialData.weeks.length) return
-
-    fetch("/api/github/contributions")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.weeks?.length) {
-          setFallbackData(data)
-        }
-      })
-      .catch(() => {})
-  }, [initialData.weeks.length])
-
   if (!weeks.length) return null
 
-  const monthLabels = language === "ro" ? MONTH_LABELS_RO : MONTH_LABELS_EN
-
-  const monthPositions: { label: string; col: number }[] = []
+  const monthPositions: { en: string; ro: string; col: number }[] = []
   let lastMonth = -1
   weeks.forEach((week, i) => {
     const firstDay = week.contributionDays[0]
     if (!firstDay) return
     const month = new Date(`${firstDay.date}T00:00:00Z`).getUTCMonth()
     if (month !== lastMonth) {
-      monthPositions.push({ label: monthLabels[month], col: i })
+      monthPositions.push({
+        en: MONTH_LABELS_EN[month],
+        ro: MONTH_LABELS_RO[month],
+        col: i,
+      })
       lastMonth = month
     }
   })
@@ -68,7 +54,10 @@ export function ContributionGraph({ initialData }: { initialData: ContributionPa
     <section className="mx-auto w-full max-w-328 px-6 md:px-10 lg:px-16 py-20 md:py-28">
       <div className="flex flex-wrap items-end justify-between gap-3 mb-3">
         <h2 className="font-display text-[clamp(24px,3vw,36px)] font-bold tracking-[-0.02em] leading-[0.95]">
-          {t("contributions.heading")}
+          <LocalizedText
+            en={translations.en["contributions.heading"]}
+            ro={translations.ro["contributions.heading"]}
+          />
         </h2>
         <a
           href={FORGEJO}
@@ -81,11 +70,16 @@ export function ContributionGraph({ initialData }: { initialData: ContributionPa
       </div>
       {total !== null && (
         <p className="text-[17px] text-ink/65 mb-12">
-          <CountUp
-            value={total}
+          <span
+            data-countup={total}
             className="tabular-nums text-ink/85 font-medium"
-          />{" "}
-          {t("contributions.subtitle")}
+          >
+            {total.toLocaleString()}
+          </span>{" "}
+          <LocalizedText
+            en={translations.en["contributions.subtitle"]}
+            ro={translations.ro["contributions.subtitle"]}
+          />
         </p>
       )}
 
@@ -101,11 +95,11 @@ export function ContributionGraph({ initialData }: { initialData: ContributionPa
             <div className="flex gap-2.5">
               <div className="flex flex-col justify-between pt-6 pb-1 shrink-0 w-8 text-[11px] text-ink/65 leading-none">
                 <span className="h-[12px]" aria-hidden />
-                <span>{language === "ro" ? "Lun" : "Mon"}</span>
+                <LocalizedText en="Mon" ro="Lun" />
                 <span className="h-[12px]" aria-hidden />
-                <span>{language === "ro" ? "Mie" : "Wed"}</span>
+                <LocalizedText en="Wed" ro="Mie" />
                 <span className="h-[12px]" aria-hidden />
-                <span>{language === "ro" ? "Vin" : "Fri"}</span>
+                <LocalizedText en="Fri" ro="Vin" />
                 <span className="h-[12px]" aria-hidden />
               </div>
 
@@ -118,13 +112,13 @@ export function ContributionGraph({ initialData }: { initialData: ContributionPa
                   }}
                 >
                   {weeks.map((_, i) => {
-                    const pos = monthPositions.find((m) => m.col === i)
+                    const position = monthPositions.find((month) => month.col === i)
                     return (
                       <div
                         key={i}
                         className="text-[11px] text-ink/65 leading-none"
                       >
-                        {pos ? pos.label : ""}
+                        {position ? <LocalizedText en={position.en} ro={position.ro} /> : ""}
                       </div>
                     )
                   })}
@@ -158,7 +152,10 @@ export function ContributionGraph({ initialData }: { initialData: ContributionPa
                 </div>
 
                 <div className="flex items-center justify-end gap-2 mt-5 text-[12px] text-ink/65">
-                  <span>{t("contributions.less")}</span>
+                  <LocalizedText
+                    en={translations.en["contributions.less"]}
+                    ro={translations.ro["contributions.less"]}
+                  />
                   <div className="flex gap-1">
                     {[0, 1, 2, 3, 4].map((l) => (
                       <div
@@ -167,7 +164,10 @@ export function ContributionGraph({ initialData }: { initialData: ContributionPa
                       />
                     ))}
                   </div>
-                  <span>{t("contributions.more")}</span>
+                  <LocalizedText
+                    en={translations.en["contributions.more"]}
+                    ro={translations.ro["contributions.more"]}
+                  />
                 </div>
               </div>
             </div>

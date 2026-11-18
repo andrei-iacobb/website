@@ -2,8 +2,8 @@ import type React from "react"
 import "@/app/globals.css"
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
 import type { Metadata, Viewport } from "next"
-import Script from "next/script"
 import { OfflineStatus } from "@/components/offline-status"
+import { SiteRuntime } from "@/components/site-runtime"
 import { PROFILE_IMAGE, SITE_URL } from "@/lib/constants"
 
 const bricolage = Bricolage_Grotesque({
@@ -130,34 +130,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Scroll-reveal sections are hidden by default (no first-paint flash);
-            with JS off there is no observer to reveal them, so show them. */}
-        <noscript>
-          <style>{`[data-reveal]{opacity:1 !important;transform:none !important}`}</style>
-        </noscript>
-
-        <Script
-          src="/js/p.js"
-          data-api="/api/p"
-          strategy="lazyOnload"
-        />
-
-        <Script id="plausible-init" strategy="lazyOnload">
-          {`
-            window.plausible = window.plausible || function() {
-              (plausible.q = plausible.q || []).push(arguments)
-            };
-            plausible.init = plausible.init || function(i) {
-              plausible.o = i || {}
-            };
-            plausible.init();
-          `}
-        </Script>
       </head>
 
       <body className={`${bricolage.variable} ${dmSans.variable} font-sans antialiased`}>
         <OfflineStatus />
         {children}
+        <SiteRuntime />
       </body>
     </html>
   )

@@ -74,13 +74,6 @@
   }
 }
 
-@utility is-visible {
-  &[data-reveal] {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @utility tabular-nums {
   /* Tabular-nums for stats */
   font-variant-numeric: tabular-nums;
@@ -154,11 +147,8 @@
   }
 
   @keyframes data-animate-enter {
-    /* 0.01, not 0: the browser records the element's first paint at
-       animation start, so hero text no longer gates LCP. The fade is
-       visually identical. */
     0% {
-      opacity: 0.01;
+      opacity: 1;
       transform: translateY(14px);
     }
     100% {
@@ -167,20 +157,32 @@
     }
   }
 
-  /* Scroll-reveal for below-fold sections - same motion language as the
-     hero [data-animate], but triggered as each section scrolls into view
-     instead of all firing on load. Hidden by default so the content is
-     never painted-then-hidden (no flash); the observer adds .is-visible as
-     each section enters view. No-JS is covered by a <noscript> override in
-     the layout, and reduced-motion forces everything visible below.
-     --reveal-i gives child items a gentle cascade. */
+  /* Keep sections visible by default. Supporting browsers add the same
+     transform-only entrance without waiting for JavaScript. */
   [data-reveal] {
-    opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-      transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-    transition-delay: calc(var(--reveal-i, 0) * 60ms);
+    opacity: 1;
+    transform: none;
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      [data-reveal] {
+        animation: section-enter 0.7s both cubic-bezier(0.2, 0.8, 0.2, 1);
+        animation-timeline: view();
+        animation-range: entry 0% entry 28%;
+      }
+    }
+  }
+
+  @keyframes section-enter {
+    from {
+      opacity: 1;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 }
 
@@ -397,18 +399,32 @@ h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  /* Never leave a scroll-reveal element hidden for reduced-motion users. */
+  [data-animate],
   [data-reveal] {
+    animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+  }
+
+  .status-dot::after,
+  .sketch-pulse,
+  .animate-pulse {
+    animation: none !important;
+  }
+
+  .preview-header,
+  .preview-skip-link {
+    transition: none !important;
+  }
+
+  .preview-shell .group:hover img {
+    scale: 1 !important;
+    transition: none !important;
+  }
+
+  .preview-shell .archive-row [aria-hidden] {
+    translate: none !important;
     transition: none !important;
   }
 }

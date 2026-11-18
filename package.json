@@ -7,29 +7,33 @@
     "node": ">=20.19.0"
   },
   "scripts": {
+    "predev": "pnpm images",
     "dev": "next dev",
+    "prebuild": "pnpm images",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test:instant": "EXPOSE_TESTING_API=1 pnpm build && playwright test"
+    "test:instant": "EXPOSE_TESTING_API=1 pnpm build && playwright test",
+    "images": "node scripts/build-images.mjs generated/image-manifest.json app components"
   },
   "dependencies": {
-    "next": "16.4.1",
+    "next": "16.4.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "redis": "6.2.0"
   },
   "devDependencies": {
-    "@next/playwright": "16.4.1",
+    "@next/playwright": "16.4.3",
     "@playwright/test": "1.62.1",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "26.2.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
     "eslint": "9.39.4",
-    "eslint-config-next": "16.4.1",
+    "eslint-config-next": "16.4.3",
     "postcss": "8.5.26",
+    "sharp": "0.35.5",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3"
   }
