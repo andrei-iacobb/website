@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 
-ARG NODE_VERSION=24.22.1
-ARG NODE_DIGEST=sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
+ARG NODE_VERSION=24.22.3
+ARG NODE_DIGEST=sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
 
 FROM node:${NODE_VERSION}-alpine@${NODE_DIGEST} AS base
 ENV PNPM_HOME=/pnpm
@@ -25,7 +25,11 @@ COPY . .
 RUN pnpm build
 
 FROM node:${NODE_VERSION}-alpine@${NODE_DIGEST} AS runner
+# The server only needs node. npm and corepack bundle their own undici and
+# brace-expansion, which trivy flags, so drop them from the runtime image.
 RUN apk add --no-cache dumb-init \
+    && rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+       /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
     && addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 --ingroup nodejs nextjs
 
